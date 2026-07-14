@@ -1,5 +1,6 @@
 import { ArrowUpRight, Instagram } from 'lucide-react'
 import { RevealOnScroll } from './RevealOnScroll'
+import { SocialLinks } from './SocialLinks'
 
 export function SocialCollage({ content }) {
   return (
@@ -11,6 +12,11 @@ export function SocialCollage({ content }) {
             <span className="section-heading__eyebrow">{content.eyebrow}</span>
             <h2>{content.title}</h2>
             <p>{content.description}</p>
+            <SocialLinks
+              links={content.socialLinks}
+              className="social-collage__social"
+              ariaLabel="Follow and contact Selah Starr Studio"
+            />
           </div>
         </div>
         <div className="social-collage__grid">

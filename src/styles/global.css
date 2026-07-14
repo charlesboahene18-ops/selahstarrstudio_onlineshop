@@ -153,6 +153,13 @@ button {
   width: 100%;
 }
 
+.button--whatsapp:hover,
+.button--whatsapp:focus-visible {
+  background: rgba(240, 251, 244, 0.96);
+  border-color: rgba(33, 86, 62, 0.24);
+  color: #21563e;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -327,12 +334,14 @@ input:focus-visible {
 
 .site-header__social a,
 .site-header__actions button,
-.site-footer__social a {
+.site-footer__social a,
+.mobile-menu__social a,
+.social-collage__social a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 1px solid transparent;
   border-radius: 50%;
   color: var(--ink);
@@ -344,10 +353,25 @@ input:focus-visible {
 
 .site-header__social a:hover,
 .site-header__actions button:hover,
-.site-footer__social a:hover {
+.site-footer__social a:hover,
+.mobile-menu__social a:hover,
+.social-collage__social a:hover {
   transform: translateY(-1px);
   border-color: rgba(17, 17, 17, 0.12);
   background: rgba(255, 255, 255, 0.62);
+}
+
+.site-header__social a[data-social-network='whatsapp']:hover,
+.site-header__social a[data-social-network='whatsapp']:focus-visible,
+.site-footer__social a[data-social-network='whatsapp']:hover,
+.site-footer__social a[data-social-network='whatsapp']:focus-visible,
+.mobile-menu__social a[data-social-network='whatsapp']:hover,
+.mobile-menu__social a[data-social-network='whatsapp']:focus-visible,
+.social-collage__social a[data-social-network='whatsapp']:hover,
+.social-collage__social a[data-social-network='whatsapp']:focus-visible {
+  color: #21563e;
+  border-color: rgba(33, 86, 62, 0.22);
+  background: rgba(37, 211, 102, 0.12);
 }
 
 .site-header__brand {
@@ -456,6 +480,13 @@ input:focus-visible {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.mobile-menu__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 
 .utility-overlay {
@@ -1408,6 +1439,14 @@ input:focus-visible {
   gap: 8px;
 }
 
+.product-card__copy p {
+  margin: 0;
+}
+
+.product-card__actions {
+  margin-top: 6px;
+}
+
 .product-card__copy span,
 .blog-card__category {
   font-size: 0.7rem;
@@ -1520,6 +1559,14 @@ input:focus-visible {
   display: flex;
   align-items: end;
   gap: 18px;
+}
+
+.social-collage__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
 }
 
 .social-collage__heading h2 {
@@ -1685,6 +1732,60 @@ input:focus-visible {
   text-transform: uppercase;
 }
 
+.site-footer__contact-links {
+  display: grid;
+  gap: 8px;
+}
+
+.site-footer__contact-link,
+.site-footer__contact-detail-link {
+  width: fit-content;
+  padding-bottom: 4px;
+}
+
+.site-footer__contact-link {
+  position: relative;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-footer__contact-link::after,
+.site-footer__contact-detail-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.24s ease;
+}
+
+.site-footer__contact-link:hover::after,
+.site-footer__contact-link:focus-visible::after,
+.site-footer__contact-detail-link:hover::after,
+.site-footer__contact-detail-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.site-footer__contact-details {
+  display: grid;
+  gap: 6px;
+}
+
+.site-footer__contact-details p {
+  color: var(--muted);
+}
+
+.site-footer__contact-detail-link {
+  position: relative;
+  color: var(--ink);
+}
+
 .site-footer__links ul {
   list-style: none;
   padding: 0;
@@ -1707,6 +1808,11 @@ input:focus-visible {
 .site-footer__stacked-form {
   display: grid;
   gap: 10px;
+}
+
+.site-footer__stacked-form button {
+  width: 100%;
+  min-height: 56px;
 }
 
 .site-footer__newsletter form {

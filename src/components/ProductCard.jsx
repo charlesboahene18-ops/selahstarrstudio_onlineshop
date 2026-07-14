@@ -1,4 +1,5 @@
 import { Eye } from 'lucide-react'
+import { Button } from './Button'
 
 export function ProductCard({ product }) {
   return (
@@ -14,6 +15,18 @@ export function ProductCard({ product }) {
         <span>{product.isMockData ? `${product.category} · Mock` : product.category}</span>
         <h3>{product.name}</h3>
         <p>{product.priceLabel}</p>
+        <div className="product-card__actions">
+          <Button
+            as="a"
+            href={product.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button--small button--stacked button--whatsapp"
+            aria-label={`${product.whatsappLabel} for ${product.name}`}
+          >
+            {product.whatsappLabel}
+          </Button>
+        </div>
       </div>
     </article>
   )

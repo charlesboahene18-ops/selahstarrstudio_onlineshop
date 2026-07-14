@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  Instagram,
   Menu,
   Search,
   ShoppingBag,
@@ -9,11 +8,8 @@ import {
 import { BrandMark } from './BrandMark'
 import { Button } from './Button'
 import { MobileMenu } from './MobileMenu'
+import { SocialLinks } from './SocialLinks'
 import { brand } from '../config/brand'
-
-const socialIcons = {
-  instagram: Instagram,
-}
 
 export function Header({ navLinks, products, socialLinks }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -132,22 +128,7 @@ export function Header({ navLinks, products, socialLinks }) {
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
 
-          <div className="site-header__social" aria-label="Social links">
-            {socialLinks.map(({ icon, label, href, external }) => {
-              const Icon = socialIcons[icon]
-              return (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target={external ? '_blank' : undefined}
-                  rel={external ? 'noopener noreferrer' : undefined}
-                >
-                  <Icon size={16} strokeWidth={1.8} />
-                </a>
-              )
-            })}
-          </div>
+          <SocialLinks links={socialLinks} className="site-header__social" />
 
           <a className="site-header__brand" href="#home" aria-label={`${brand.name} home`}>
             <BrandMark compact />
@@ -185,6 +166,7 @@ export function Header({ navLinks, products, socialLinks }) {
       <MobileMenu
         open={menuOpen}
         navLinks={navLinks}
+        socialLinks={socialLinks}
         onClose={() => setMenuOpen(false)}
         firstLinkRef={firstLinkRef}
       />

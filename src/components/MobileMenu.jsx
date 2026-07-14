@@ -1,9 +1,11 @@
 import { Button } from './Button'
+import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
+import { SocialLinks } from './SocialLinks'
 
-export function MobileMenu({ open, navLinks, onClose, firstLinkRef }) {
+export function MobileMenu({ open, navLinks, socialLinks, onClose, firstLinkRef }) {
   return (
     <div className={`mobile-menu ${open ? 'is-open' : ''}`} aria-hidden={!open}>
-      <nav className="mobile-menu__panel" aria-label="Mobile">
+      <nav className="mobile-menu__panel" id="mobile-menu" aria-label="Mobile">
         {navLinks.map((link, index) => (
           <a
             key={link.href}
@@ -14,8 +16,20 @@ export function MobileMenu({ open, navLinks, onClose, firstLinkRef }) {
             {link.label}
           </a>
         ))}
-        <Button as="a" href="#custom-order-form" className="button--small" onClick={onClose}>
-          Start a custom order
+        <SocialLinks
+          links={socialLinks}
+          className="mobile-menu__social"
+          ariaLabel="Mobile social links"
+        />
+        <Button
+          as="a"
+          href={buildWhatsAppUrl(whatsappMessages.customOrder)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button--small button--stacked button--whatsapp"
+          onClick={onClose}
+        >
+          Start a custom order on WhatsApp
         </Button>
       </nav>
     </div>

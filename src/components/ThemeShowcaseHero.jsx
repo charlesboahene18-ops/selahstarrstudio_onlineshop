@@ -18,7 +18,13 @@ export function ThemeShowcaseHero({ content, slides }) {
           <Button as="a" href={content.primaryHref}>
             {content.primaryCta}
           </Button>
-          <Button as="a" href={content.secondaryHref} className="button--ghost">
+          <Button
+            as="a"
+            href={content.secondaryHref}
+            target={content.secondaryExternal ? '_blank' : undefined}
+            rel={content.secondaryExternal ? 'noopener noreferrer' : undefined}
+            className="button--ghost button--whatsapp"
+          >
             {content.secondaryCta}
           </Button>
         </div>

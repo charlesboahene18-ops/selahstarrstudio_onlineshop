@@ -5,6 +5,7 @@ import goldPendant from '../assets/products/gold-pendant.svg'
 import goldRings from '../assets/products/gold-rings.svg'
 import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverPendant from '../assets/products/silver-pendant.svg'
+import { buildProductWhatsAppUrl } from '../utils/whatsapp'
 
 const contactPriceLabel = 'Contact for pricing'
 const generalMaterial = 'Hand-selected beads and decorative elements'
@@ -56,6 +57,8 @@ function createProduct({
     productionTime: null,
     isMockData: true,
     href: '#custom-order-form',
+    whatsappHref: buildProductWhatsAppUrl(name),
+    whatsappLabel: madeToOrder ? 'Request on WhatsApp' : 'Enquire on WhatsApp',
   }
 }
 

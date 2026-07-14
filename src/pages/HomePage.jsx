@@ -67,6 +67,7 @@ export function HomePage() {
           products={allProducts.slice(0, 8)}
           cta={productSection.cta}
           ctaHref={productSection.ctaHref}
+          ctaExternal={productSection.ctaExternal}
         />
         <MissionCollage content={missionContent} />
         <FAQAccordion content={faqSection} items={faqItems} />

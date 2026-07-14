@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { Instagram } from 'lucide-react'
 import { BrandMark } from './BrandMark'
+import { SocialLinks } from './SocialLinks'
+import { buildCustomOrderWhatsAppUrl } from '../utils/whatsapp'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const socialIcons = {
-  instagram: Instagram,
-}
 
 const initialCustomRequest = {
   name: '',
@@ -37,6 +35,7 @@ export function Footer({ content, groups }) {
       return
     }
 
+    window.open(buildCustomOrderWhatsAppUrl(customRequest), '_blank', 'noopener,noreferrer')
     setCustomFeedback(content.customOrder.successMessage)
     setCustomRequest(initialCustomRequest)
   }
@@ -46,30 +45,35 @@ export function Footer({ content, groups }) {
       <div className="site-footer__brand">
         <BrandMark />
         <p>{content.description}</p>
-        <a
-          className="site-footer__instagram-link"
-          href={content.contactHref}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {content.contactCta}
-        </a>
-        <div className="site-footer__social">
-          {content.socialLinks.map(({ icon, label, href, external }) => {
-            const Icon = socialIcons[icon]
-            return (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                target={external ? '_blank' : undefined}
-                rel={external ? 'noopener noreferrer' : undefined}
-              >
-                <Icon size={16} />
-              </a>
-            )
-          })}
+        <div className="site-footer__contact-links">
+          {content.contactLinks.map((link) => (
+            <a
+              key={link.label}
+              className="site-footer__contact-link"
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
+        <div className="site-footer__contact-details">
+          {content.contactDetails.map((detail) => (
+            <p key={detail.label}>
+              {detail.label}:{' '}
+              <a
+                className="site-footer__contact-detail-link"
+                href={detail.href}
+                target={detail.external ? '_blank' : undefined}
+                rel={detail.external ? 'noopener noreferrer' : undefined}
+              >
+                {detail.value}
+              </a>
+            </p>
+          ))}
+        </div>
+        <SocialLinks links={content.socialLinks} className="site-footer__social" />
       </div>
 
       <div className="site-footer__links">

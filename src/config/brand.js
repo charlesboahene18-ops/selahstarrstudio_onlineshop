@@ -10,6 +10,8 @@ export const brand = {
     'Discover handcrafted jewellery, expressive beadwork and custom wearable pieces designed to celebrate individuality.',
   instagramHandle: '@selahstarrstudio',
   instagramUrl: 'https://www.instagram.com/selahstarrstudio/',
+  whatsappNumber: '+233 27 360 7878',
+  whatsappUrl: 'https://wa.me/233273607878',
   customOrdersAvailable: true,
   worldwideShipping: null,
   email: null,

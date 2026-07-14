@@ -16,11 +16,29 @@ import socialSquareTwo from '../assets/social/social-square-two.svg'
 import socialWatch from '../assets/social/social-watch.svg'
 import { featuredCollections, studioCollections } from './collectionData'
 import { allProducts, featuredProducts } from './mockProducts'
+import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
 
 export const announcementMessages = [
   'Handmade pieces created with care',
   'Custom orders are available',
   `Follow ${brand.instagramHandle} on Instagram`,
+]
+
+export const socialLinks = [
+  {
+    icon: 'instagram',
+    label: 'Instagram',
+    ariaLabel: `Follow ${brand.name} on Instagram`,
+    href: brand.instagramUrl,
+    external: true,
+  },
+  {
+    icon: 'whatsapp',
+    label: 'WhatsApp',
+    ariaLabel: 'Contact Selah Starr Studio on WhatsApp',
+    href: brand.whatsappUrl,
+    external: true,
+  },
 ]
 
 export const navLinks = [
@@ -31,14 +49,7 @@ export const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export const headerSocialLinks = [
-  {
-    icon: 'instagram',
-    label: 'Instagram',
-    href: brand.instagramUrl,
-    external: true,
-  },
-]
+export const headerSocialLinks = socialLinks
 
 export const themeHeroContent = {
   eyebrow: brand.name,
@@ -47,8 +58,9 @@ export const themeHeroContent = {
   description: brand.heroSupportingCopy,
   primaryCta: 'Shop the Collection',
   primaryHref: '#collections',
-  secondaryCta: 'Request a Custom Piece',
-  secondaryHref: '#custom-order-form',
+  secondaryCta: 'Request a Custom Piece on WhatsApp',
+  secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
+  secondaryExternal: true,
   scriptText: 'Wearable Art',
   badgeText: 'S',
   showcaseAnnouncementText: announcementMessages.join(' · '),
@@ -62,8 +74,9 @@ export const launchContent = {
   accent: 'Custom',
   description:
     'Request a custom jewellery or wearable-art piece inspired by your preferred colours, measurements, occasion and personal style. All product details remain editable until confirmed by Selah Starr Studio.',
-  cta: 'Start a Custom Order',
-  href: '#custom-order-form',
+  cta: 'Start a Custom Order on WhatsApp',
+  href: buildWhatsAppUrl(whatsappMessages.customOrder),
+  external: true,
   images: [
     {
       src: braceletStack,
@@ -132,8 +145,9 @@ export const productSection = {
   title: 'Featured Creations',
   description:
     'Temporary mock product cards representing Selah Starr Studio’s handmade beadwork, custom pieces, and wearable-art direction.',
-  cta: 'Request a featured piece',
-  ctaHref: '#custom-order-form',
+  cta: 'Enquire on WhatsApp',
+  ctaHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
+  ctaExternal: true,
 }
 
 export const missionContent = {
@@ -214,9 +228,10 @@ export const socialContent = {
   eyebrow: 'Follow Our Journey',
   title: 'follow us',
   description:
-    'Visit Selah Starr Studio on Instagram for new pieces, custom-order inspiration, and behind-the-scenes studio moments. The collage below uses temporary mock assets only.',
+    'Visit Selah Starr Studio on Instagram for new pieces, custom-order inspiration, and behind-the-scenes studio moments, or message the studio directly on WhatsApp for enquiries.',
   ctaLabel: `Follow ${brand.instagramHandle}`,
   ctaHref: brand.instagramUrl,
+  socialLinks,
   images: [
     {
       src: socialSquareOne,
@@ -304,6 +319,7 @@ export const footerLinkGroups = [
       { label: 'Shipping details to confirm', href: '#faq' },
       { label: 'Returns details to confirm', href: '#faq' },
       { label: 'Contact us through Instagram', href: brand.instagramUrl, external: true },
+      { label: `WhatsApp: ${brand.whatsappNumber}`, href: brand.whatsappUrl, external: true },
     ],
   },
 ]
@@ -311,29 +327,42 @@ export const footerLinkGroups = [
 export const footerContent = {
   description:
     'Handmade jewellery, expressive beadwork and custom wearable art created to celebrate individuality.',
-  socialLinks: [
+  socialLinks,
+  contactLinks: [
     {
-      icon: 'instagram',
-      label: 'Instagram',
+      label: 'Contact us on WhatsApp',
+      href: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
+      external: true,
+    },
+    {
+      label: 'Contact us through Instagram',
       href: brand.instagramUrl,
+      external: true,
+    },
+  ],
+  contactDetails: [
+    {
+      label: 'WhatsApp',
+      value: brand.whatsappNumber,
+      href: brand.whatsappUrl,
       external: true,
     },
   ],
   customOrder: {
     title: 'Start a Custom Order',
     description:
-      'Share your preferred colours, measurements, occasion, and style notes to begin an editable custom-order request.',
+      'Share your preferred colours, measurements, occasion, and style notes to begin a WhatsApp custom-order conversation.',
     fields: {
       name: 'Name',
-      contact: 'Instagram handle or email',
+      contact: 'Instagram handle, email, or phone',
       details: 'Preferred colours, measurements, occasion, and style notes',
     },
-    buttonLabel: 'Send Request',
+    buttonLabel: 'Start a Custom Order on WhatsApp',
     idleMessage:
-      'This form is frontend-only. Until a live workflow is connected, clients should contact Selah Starr Studio through Instagram.',
+      'This form now opens WhatsApp with your custom-order details for a direct conversation with Selah Starr Studio.',
     validationMessage: 'Add a contact method and a few request details before submitting.',
     successMessage:
-      'Your request has been captured in this demo UI only. Connect this form to Selah Starr Studio’s preferred contact workflow before launch.',
+      'Opening WhatsApp with your custom-order details.',
   },
   newsletter: {
     title: 'Join the Selah Starr Community',
@@ -348,8 +377,6 @@ export const footerContent = {
     successMessage:
       'You are on the list in this demo build. Connect a real mailing service before production.',
   },
-  contactCta: 'Contact us through Instagram',
-  contactHref: brand.instagramUrl,
   copyright: `© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`,
 }
 
@@ -362,7 +389,7 @@ export const showcaseSlides = [
     description: 'Three mock visuals showing the studio’s made-to-order and wearable-art direction.',
     mobileTitle: 'Custom piece',
     mobileDescription: 'Personal beadwork and made-to-order wearable art.',
-    cta: 'Start a custom order',
+    cta: 'Start a custom order on WhatsApp',
     images: launchContent.images,
     mobileImage: launchContent.images[0],
     miniImages: [launchContent.images[0], launchContent.images[2]],
@@ -413,7 +440,7 @@ export const showcaseSlides = [
     description: 'Editable mock product cards with contact-for-pricing labels and handmade storytelling.',
     mobileTitle: 'Featured pieces',
     mobileDescription: 'Customisable mock products for the Selah Starr Studio catalogue.',
-    cta: 'Shop the collection',
+    cta: 'Enquire on WhatsApp',
     items: featuredProducts,
     mobileImage: featuredProducts[0].images[0],
     miniImages: featuredProducts.slice(0, 2).map((item) => ({
