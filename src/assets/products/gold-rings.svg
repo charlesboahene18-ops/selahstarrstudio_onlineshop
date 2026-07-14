@@ -1,0 +1,23 @@
+<svg width="800" height="640" viewBox="0 0 800 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="640" fill="#F8F6F2"/>
+  <path d="M42 156C290 80 530 78 760 146" stroke="#E1E5E6" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <path d="M11 482C188 409 378 383 780 424" stroke="#DFDFDF" stroke-width="12" stroke-linecap="round" opacity="0.7"/>
+  <g opacity="0.2" filter="url(#shadow1)">
+    <ellipse cx="327" cy="390" rx="150" ry="79" fill="#A17327"/>
+  </g>
+  <g opacity="0.22" filter="url(#shadow2)">
+    <ellipse cx="505" cy="326" rx="167" ry="90" fill="#A17327"/>
+  </g>
+  <circle cx="311" cy="359" r="126" stroke="#BC8A2C" stroke-width="34"/>
+  <circle cx="499" cy="297" r="133" stroke="#D2A64D" stroke-width="36"/>
+  <circle cx="311" cy="359" r="108" stroke="#F3E5B8" stroke-width="3" stroke-dasharray="1 12"/>
+  <circle cx="499" cy="297" r="115" stroke="#F3E5B8" stroke-width="3" stroke-dasharray="1 12"/>
+  <defs>
+    <filter id="shadow1" x="117" y="251" width="420" height="278" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <filter id="shadow2" x="278" y="176" width="454" height="300" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+</svg>

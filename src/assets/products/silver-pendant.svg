@@ -1,0 +1,21 @@
+<svg width="800" height="960" viewBox="0 0 800 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="960" fill="#F6F7F8"/>
+  <path d="M85 123C292 107 445 115 713 164" stroke="#E5E7EA" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <path d="M181 0C299 135 340 228 400 414" stroke="#AEB6C0" stroke-width="14" stroke-linecap="round"/>
+  <path d="M196 0C307 131 347 225 406 406" stroke="#D8E0E7" stroke-width="6" stroke-linecap="round"/>
+  <rect x="286" y="477" width="228" height="228" rx="54" transform="rotate(12 286 477)" fill="url(#paint0_linear)" stroke="#BFC7D0" stroke-width="8"/>
+  <path d="M337 593L392 529L456 625" stroke="#F5F7FA" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M343 624L386 567L431 662" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <g opacity="0.2" filter="url(#shadow)">
+    <ellipse cx="420" cy="790" rx="181" ry="63" fill="#677483"/>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="400" y1="477" x2="400" y2="705" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#CBD4DD"/>
+    </linearGradient>
+    <filter id="shadow" x="179" y="667" width="482" height="246" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+</svg>
