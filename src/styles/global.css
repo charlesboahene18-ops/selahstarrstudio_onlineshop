@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=WindSong:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600&family=Poiret+One&display=swap');
 
 :root {
+  --font-display: 'Poiret One', 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-brand: 'Cormorant Garamond', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-luxury: 'Bodoni Moda', 'Didot', 'Baskerville', serif;
+  --font-script: 'Great Vibes', 'Snell Roundhand', cursive;
+  --font-body: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
   --bg: #fbf6ee;
   --bg-soft: #f6efe3;
   --panel: rgba(255, 253, 249, 0.8);
@@ -24,7 +29,7 @@
   --radius-sm: 14px;
   --content-width: min(1220px, calc(100vw - 36px));
   color-scheme: light;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-body);
 }
 
 *,
@@ -44,7 +49,8 @@ body {
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 26%),
     linear-gradient(180deg, #fcf8f1, #f9f4ec 38%, #fcf9f4 100%);
   color: var(--ink);
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-body);
+  line-height: 1.6;
   overflow-x: clip;
 }
 
@@ -59,7 +65,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -113,10 +120,11 @@ button {
   background: rgba(255, 255, 255, 0.96);
   box-shadow: var(--shadow-button);
   color: var(--ink);
+  font-family: var(--font-body);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 500;
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease,
@@ -176,17 +184,20 @@ input:focus-visible {
 }
 
 .brand-mark strong {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.7rem, 2vw, 2.35rem);
-  font-weight: 600;
+  font-family: var(--font-brand);
+  font-size: clamp(1.7rem, 2vw, 2.4rem);
+  font-weight: 500;
   letter-spacing: 0.08em;
+  line-height: 0.92;
+  text-transform: uppercase;
 }
 
 .brand-mark em {
-  margin-top: -4px;
-  font-family: 'WindSong', cursive;
+  margin-top: -8px;
+  font-family: var(--font-script);
   font-style: normal;
-  font-size: clamp(1.05rem, 1.1vw, 1.35rem);
+  font-size: clamp(1.08rem, 1.3vw, 1.55rem);
+  letter-spacing: 0.01em;
 }
 
 .brand-mark--compact strong {
@@ -218,8 +229,9 @@ input:focus-visible {
   align-items: center;
   gap: 10px;
   width: fit-content;
+  font-family: var(--font-body);
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
@@ -243,13 +255,13 @@ input:focus-visible {
 .utility-panel h2,
 .social-collage__heading h2 {
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-brand);
   font-weight: 500;
 }
 
 .section-heading h2 {
-  font-size: clamp(2.4rem, 4vw, 4.9rem);
-  line-height: 0.94;
+  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  line-height: 1.02;
 }
 
 .section-heading p,
@@ -278,8 +290,9 @@ input:focus-visible {
   gap: 46px;
   width: max-content;
   padding: 12px 0;
+  font-family: var(--font-body);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   animation: marquee 18s linear infinite;
@@ -394,9 +407,11 @@ input:focus-visible {
 }
 
 .site-header__nav a {
+  font-family: var(--font-body);
   font-size: 0.8rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   padding-bottom: 6px;
 }
 
@@ -476,9 +491,10 @@ input:focus-visible {
 .mobile-menu__panel a {
   width: fit-content;
   padding-bottom: 5px;
+  font-family: var(--font-body);
   font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -574,6 +590,9 @@ input:focus-visible {
 .utility-panel__results strong {
   display: block;
   margin-bottom: 4px;
+  font-family: var(--font-brand);
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 .utility-panel__results small {
@@ -622,21 +641,23 @@ input:focus-visible {
 .theme-showcase-hero h1 {
   margin: 0;
   display: grid;
-  gap: 6px;
+  gap: 10px;
 }
 
 .theme-showcase-hero__serif {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3.3rem, 6.2vw, 6.2rem);
-  line-height: 0.84;
-  letter-spacing: -0.05em;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 .theme-showcase-hero__sans {
-  font-size: clamp(1.15rem, 2.3vw, 2.25rem);
-  font-weight: 700;
-  letter-spacing: 0.24em;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  line-height: 1.04;
 }
 
 .theme-showcase-hero__description {
@@ -656,7 +677,7 @@ input:focus-visible {
 .theme-showcase-hero__script {
   position: absolute;
   top: 74px;
-  font-family: 'WindSong', cursive;
+  font-family: var(--font-script);
   font-size: clamp(3rem, 5vw, 5.4rem);
   color: rgba(17, 17, 17, 0.22);
   writing-mode: vertical-rl;
@@ -688,9 +709,9 @@ input:focus-visible {
 }
 
 .theme-showcase-hero__badge span {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-brand);
   font-size: 4rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .showcase-slider {
@@ -802,8 +823,9 @@ input:focus-visible {
   margin: 0 -24px;
   padding: 8px 24px;
   background: #ebe0ce;
+  font-family: var(--font-body);
   font-size: 0.64rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
@@ -862,8 +884,12 @@ input:focus-visible {
 
 .showcase-preview h3,
 .showcase-mobile h3 {
+  font-family: var(--font-luxury);
   font-size: clamp(1.8rem, 2.8vw, 3.1rem);
-  line-height: 0.92;
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .showcase-preview__text p,
@@ -900,9 +926,13 @@ input:focus-visible {
 }
 
 .showcase-preview__collection-grid strong {
-  font-family: 'WindSong', cursive;
-  font-size: 1.9rem;
+  font-family: var(--font-luxury);
+  font-size: 1.02rem;
   font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .showcase-preview__product-grid {
@@ -924,6 +954,7 @@ input:focus-visible {
 }
 
 .showcase-preview__product-grid span {
+  font-family: var(--font-body);
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -951,12 +982,15 @@ input:focus-visible {
 }
 
 .showcase-preview__social-head span {
-  font-family: 'WindSong', cursive;
-  font-size: 3rem;
+  font-family: var(--font-script);
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 0.9;
 }
 
 .showcase-preview__social-head small {
   color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -994,7 +1028,9 @@ input:focus-visible {
 }
 
 .showcase-mobile__label {
+  font-family: var(--font-body);
   font-size: 0.78rem;
+  font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -1022,9 +1058,12 @@ input:focus-visible {
 }
 
 .showcase-slider__mini-card span {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-luxury);
   font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .showcase-slider__mini-grid {
@@ -1083,11 +1122,13 @@ input:focus-visible {
 }
 
 .showcase-slider__status strong {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-brand);
   font-size: 1.35rem;
+  font-weight: 500;
 }
 
 .showcase-slider__status span {
+  font-family: var(--font-body);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -1117,15 +1158,17 @@ input:focus-visible {
 
 .launch-hero__copy h2 span,
 .mission-collage__copy h2 span {
-  font-size: clamp(3.2rem, 5vw, 5.4rem);
-  line-height: 0.9;
+  font-family: var(--font-luxury);
+  font-size: clamp(2.8rem, 5vw, 5.1rem);
+  line-height: 0.96;
+  letter-spacing: 0.04em;
 }
 
 .launch-hero__copy h2 em,
 .mission-collage__copy h2 em {
-  font-family: 'WindSong', cursive;
+  font-family: var(--font-script);
   font-style: normal;
-  font-size: clamp(2.6rem, 4vw, 4.4rem);
+  font-size: clamp(2.35rem, 4vw, 4.1rem);
   line-height: 0.8;
 }
 
@@ -1233,8 +1276,9 @@ input:focus-visible {
 }
 
 .collection-card__copy span {
+  font-family: var(--font-body);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1242,9 +1286,12 @@ input:focus-visible {
 
 .collection-card__copy h3 {
   margin: 0;
-  font-family: 'WindSong', cursive;
-  font-size: 2.2rem;
+  font-family: var(--font-luxury);
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
   font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.08;
+  text-transform: uppercase;
 }
 
 .collection-card > svg {
@@ -1290,8 +1337,10 @@ input:focus-visible {
 }
 
 .gift-banner__content h2 {
-  font-size: clamp(3rem, 6vw, 6rem);
-  line-height: 0.9;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 5.8rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
 }
 
 .gift-banner__content p {
@@ -1311,8 +1360,9 @@ input:focus-visible {
 }
 
 .membership-form__form label {
+  font-family: var(--font-body);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1349,8 +1399,9 @@ input:focus-visible {
   border: 0;
   background: transparent;
   white-space: nowrap;
+  font-family: var(--font-body);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1417,8 +1468,9 @@ input:focus-visible {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 14px 26px rgba(33, 24, 10, 0.18);
+  font-family: var(--font-body);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0;
@@ -1449,8 +1501,9 @@ input:focus-visible {
 
 .product-card__copy span,
 .blog-card__category {
+  font-family: var(--font-body);
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1459,9 +1512,10 @@ input:focus-visible {
 .product-card__copy h3,
 .blog-card h3 {
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-brand);
   font-size: 1.6rem;
   font-weight: 500;
+  line-height: 1.08;
 }
 
 .product-grid-section__cta {
@@ -1525,7 +1579,13 @@ input:focus-visible {
   border: 0;
   background: transparent;
   text-align: left;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.faq-accordion__item button span {
+  font-family: var(--font-brand);
+  font-size: clamp(1.12rem, 2vw, 1.42rem);
+  line-height: 1.15;
 }
 
 .faq-accordion__answer {
@@ -1612,8 +1672,9 @@ input:focus-visible {
   padding: 12px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-body);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0;
@@ -1636,10 +1697,11 @@ input:focus-visible {
 
 .social-collage__cta {
   width: fit-content;
+  font-family: var(--font-body);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
 }
 
 .blog-section__grid {
@@ -1682,8 +1744,9 @@ input:focus-visible {
   gap: 8px;
   width: fit-content;
   padding-bottom: 6px;
+  font-family: var(--font-body);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1718,16 +1781,33 @@ input:focus-visible {
 .site-footer__links h2,
 .site-footer__newsletter h2 {
   margin: 0;
-  font-size: 0.84rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-family: var(--font-brand);
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: 0.04em;
+}
+
+.site-footer__links h2 {
+  text-transform: none;
+}
+
+.site-footer__instagram-link,
+.site-footer__contact-link,
+.site-footer__links a,
+.site-footer__newsletter button {
+  font-family: var(--font-body);
+}
+
+.site-footer__links h2 + ul {
+  margin-top: 14px;
 }
 
 .site-footer__instagram-link {
   width: fit-content;
   padding-bottom: 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.84rem;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1746,7 +1826,7 @@ input:focus-visible {
 .site-footer__contact-link {
   position: relative;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1839,9 +1919,9 @@ input:focus-visible {
   border: 1px solid rgba(17, 17, 17, 0.16);
   background: rgba(255, 255, 255, 0.94);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .site-footer__feedback {
@@ -2042,11 +2122,12 @@ input:focus-visible {
   }
 
   .theme-showcase-hero__serif {
-    font-size: 3.5rem;
+    font-size: clamp(2.7rem, 12vw, 3.35rem);
   }
 
   .theme-showcase-hero__sans {
-    font-size: 1.2rem;
+    font-size: clamp(0.98rem, 4vw, 1.18rem);
+    letter-spacing: 0.12em;
   }
 
   .theme-showcase-hero__stage {

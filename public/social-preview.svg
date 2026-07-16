@@ -4,8 +4,8 @@
   <circle cx="930" cy="210" r="118" fill="#D8C1A3"/>
   <circle cx="1010" cy="282" r="86" fill="#E9DCC8"/>
   <circle cx="854" cy="294" r="74" fill="#C8A474"/>
-  <text x="102" y="235" fill="#111111" font-family="Georgia, 'Times New Roman', serif" font-size="88" letter-spacing="5">SELAH STARR</text>
-  <text x="106" y="304" fill="#111111" font-family="'Brush Script MT', cursive" font-size="56">studio</text>
-  <text x="104" y="394" fill="#645B52" font-family="Arial, sans-serif" font-size="32" letter-spacing="6">HANDMADE JEWELLERY  •  WEARABLE ART</text>
-  <text x="104" y="452" fill="#645B52" font-family="Arial, sans-serif" font-size="28">Text-based placeholder preview for Selah Starr Studio</text>
+  <text x="102" y="235" fill="#111111" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-size="88" letter-spacing="5">SELAH STARR</text>
+  <text x="106" y="304" fill="#111111" font-family="'Great Vibes', 'Brush Script MT', cursive" font-size="56">studio</text>
+  <text x="104" y="394" fill="#645B52" font-family="'Inter', Arial, sans-serif" font-size="32" letter-spacing="6">HANDMADE JEWELLERY  •  WEARABLE ART</text>
+  <text x="104" y="452" fill="#645B52" font-family="'Inter', Arial, sans-serif" font-size="28">Text-based placeholder preview for Selah Starr Studio</text>
 </svg>
