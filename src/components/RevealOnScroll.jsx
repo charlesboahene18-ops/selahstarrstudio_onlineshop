@@ -10,6 +10,11 @@ export function RevealOnScroll({ as: Tag = 'div', className = '', delay = 0, chi
       return undefined
     }
 
+    if (typeof window === 'undefined' || typeof window.IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return undefined
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

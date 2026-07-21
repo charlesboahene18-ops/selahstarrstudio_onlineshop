@@ -17,6 +17,13 @@ import socialWatch from '../assets/social/social-watch.svg'
 import { featuredCollections, studioCollections } from './collectionData'
 import { allProducts, featuredProducts } from './mockProducts'
 import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
+import {
+  toCollectionRoute,
+  toHomeSection,
+  toJournalPostRoute,
+  toJournalRoute,
+  toProductsRoute,
+} from '../utils/routes'
 
 export const announcementMessages = [
   'Handmade pieces created with care',
@@ -42,11 +49,11 @@ export const socialLinks = [
 ]
 
 export const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Collections', href: '#collections' },
-  { label: 'Custom Orders', href: '#custom-order-form' },
-  { label: 'Journal', href: '#journal' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: toHomeSection('home') },
+  { label: 'Collections', href: toProductsRoute() },
+  { label: 'Custom Orders', href: toHomeSection('custom-order-form') },
+  { label: 'Journal', href: toJournalRoute() },
+  { label: 'Contact', href: toHomeSection('contact') },
 ]
 
 export const headerSocialLinks = socialLinks
@@ -57,7 +64,7 @@ export const themeHeroContent = {
   sansTitle: 'With Soul & Sparkle',
   description: brand.heroSupportingCopy,
   primaryCta: 'Shop the Collection',
-  primaryHref: '#collections',
+  primaryHref: toProductsRoute(),
   secondaryCta: 'Request a Custom Piece on WhatsApp',
   secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
   secondaryExternal: true,
@@ -120,7 +127,7 @@ export const giftBannerContent = {
   description:
     'Celebrate someone special with a handcrafted piece created with colour, detail and personal meaning.',
   cta: 'Explore Gift Ideas',
-  href: '#bestsellers',
+  href: toProductsRoute(),
   background: chainBanner,
 }
 
@@ -265,6 +272,7 @@ export const blogSection = {
 
 export const blogPosts = [
   {
+    slug: 'styling-statement-beadwork-with-confidence',
     category: 'Draft Styling Guide',
     title: 'Styling Statement Beadwork With Confidence',
     excerpt:
@@ -272,9 +280,30 @@ export const blogPosts = [
     image: blogLayering,
     imageAlt:
       'Temporary mock image representing a draft styling article for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('styling-statement-beadwork-with-confidence'),
+    readingTime: '4 min read',
+    introduction:
+      'This draft journal entry explores how Selah Starr Studio statement beadwork can stay expressive without overwhelming the full outfit.',
+    sections: [
+      {
+        heading: 'Start With One Lead Piece',
+        body:
+          'Choose the necklace, earring set, or body piece you want to build around first. Let that handcrafted focal point guide your neckline, sleeve volume, and colour balance.',
+      },
+      {
+        heading: 'Give Colour Room To Breathe',
+        body:
+          'When beadwork is already doing visual work, cleaner fabric silhouettes usually create the strongest contrast. Simple cuts allow texture and colour placement to stay intentional.',
+      },
+      {
+        heading: 'Repeat A Detail, Not The Whole Palette',
+        body:
+          'A single accent colour repeated in shoes, makeup, or a bag often feels more refined than matching every shade in the piece. The jewellery remains the main event.',
+      },
+    ],
   },
   {
+    slug: 'how-to-care-for-handmade-beaded-pieces',
     category: 'Draft Care Guide',
     title: 'How to Care for Handmade Beaded Pieces',
     excerpt:
@@ -282,9 +311,30 @@ export const blogPosts = [
     image: blogCare,
     imageAlt:
       'Temporary mock image representing a draft care guide for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('how-to-care-for-handmade-beaded-pieces'),
+    readingTime: '3 min read',
+    introduction:
+      'This draft care guide outlines the baseline habits that help handmade beadwork retain its shape, finish, and visual clarity over time.',
+    sections: [
+      {
+        heading: 'Store Pieces Separately',
+        body:
+          'Keeping handcrafted items in separate pouches or compartments reduces tangling, friction, and unnecessary stress on closures or woven sections.',
+      },
+      {
+        heading: 'Keep Moisture And Chemicals Away',
+        body:
+          'Perfume, lotion, and humidity can all affect delicate materials differently. It is safer to add jewellery after getting dressed and to keep pieces dry when not in use.',
+      },
+      {
+        heading: 'Check Fit Before Each Wear',
+        body:
+          'For made-to-measure or more sculptural pieces, a quick check of ties, clasps, and bead tension helps catch small issues before they become larger repairs.',
+      },
+    ],
   },
   {
+    slug: 'choosing-colours-for-a-custom-jewellery-design',
     category: 'Draft Custom Guide',
     title: 'Choosing Colours for a Custom Jewellery Design',
     excerpt:
@@ -292,7 +342,27 @@ export const blogPosts = [
     image: blogOccasion,
     imageAlt:
       'Temporary mock image representing a draft custom design article for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('choosing-colours-for-a-custom-jewellery-design'),
+    readingTime: '5 min read',
+    introduction:
+      'This draft custom-order note helps clients think through colour in a way that feels personal, wearable, and connected to the occasion.',
+    sections: [
+      {
+        heading: 'Begin With Mood Before Shade',
+        body:
+          'Words like celebratory, grounded, soft, bold, or ceremonial are often more useful than naming exact colours immediately. Mood gives the design direction.',
+      },
+      {
+        heading: 'Match The Piece To The Moment',
+        body:
+          'A commission for a wedding guest look, performance costume, or editorial shoot may need a very different colour rhythm from an everyday accessory.',
+      },
+      {
+        heading: 'Use Skin Tone And Wardrobe As Reference',
+        body:
+          'Bringing a few garments, inspiration images, or fabric tones into the conversation helps the studio shape a palette that feels lived-in rather than random.',
+      },
+    ],
   },
 ]
 
@@ -300,9 +370,9 @@ export const footerLinkGroups = [
   {
     title: 'Shop',
     links: [
-      { label: 'Handmade Jewellery', href: '#collections' },
-      { label: 'Wearable Art', href: '#studio-categories' },
-      { label: 'Featured Creations', href: '#bestsellers' },
+      { label: 'Handmade Jewellery', href: toCollectionRoute('beaded-jewellery') },
+      { label: 'Wearable Art', href: toCollectionRoute('wearable-art') },
+      { label: 'Featured Creations', href: toProductsRoute() },
     ],
   },
   {

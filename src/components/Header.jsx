@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Menu,
+  Minus,
+  Plus,
   Search,
   ShoppingBag,
+  Trash2,
   X,
 } from 'lucide-react'
 import { BrandMark } from './BrandMark'
@@ -10,8 +13,17 @@ import { Button } from './Button'
 import { MobileMenu } from './MobileMenu'
 import { SocialLinks } from './SocialLinks'
 import { brand } from '../config/brand'
+import { useCart } from '../hooks/useCart'
+import { toCartRoute } from '../utils/routes'
 
 export function Header({ navLinks, products, socialLinks }) {
+  const {
+    cartItems,
+    itemCount,
+    checkoutHref,
+    removeItem,
+    updateQuantity,
+  } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -24,6 +36,11 @@ export function Header({ navLinks, products, socialLinks }) {
   const searchInputRef = useRef(null)
 
   const anyOverlayOpen = menuOpen || searchOpen || cartOpen
+  const closeOverlays = () => {
+    setMenuOpen(false)
+    setSearchOpen(false)
+    setCartOpen(false)
+  }
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24)
@@ -84,6 +101,11 @@ export function Header({ navLinks, products, socialLinks }) {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [cartOpen, menuOpen, searchOpen])
 
+  useEffect(() => {
+    window.addEventListener('hashchange', closeOverlays)
+    return () => window.removeEventListener('hashchange', closeOverlays)
+  }, [])
+
   const filteredProducts = useMemo(() => {
     if (!query.trim()) {
       return products.slice(0, 4)
@@ -97,14 +119,12 @@ export function Header({ navLinks, products, socialLinks }) {
   }, [products, query])
 
   const openSearch = () => {
-    setCartOpen(false)
-    setMenuOpen(false)
+    closeOverlays()
     setSearchOpen(true)
   }
 
   const openCart = () => {
-    setSearchOpen(false)
-    setMenuOpen(false)
+    closeOverlays()
     setCartOpen(true)
   }
 
@@ -156,8 +176,10 @@ export function Header({ navLinks, products, socialLinks }) {
               type="button"
               aria-label="Open cart preview"
               onClick={openCart}
+              className="site-header__cart-button"
             >
               <ShoppingBag size={18} strokeWidth={1.9} />
+              {itemCount ? <span className="site-header__cart-count">{itemCount}</span> : null}
             </button>
           </div>
         </div>
@@ -172,7 +194,7 @@ export function Header({ navLinks, products, socialLinks }) {
       />
 
       <div className={`utility-overlay ${searchOpen || cartOpen ? 'is-visible' : ''}`} aria-hidden={!searchOpen && !cartOpen}>
-        <div className="utility-overlay__backdrop" onClick={() => { setSearchOpen(false); setCartOpen(false) }} />
+        <div className="utility-overlay__backdrop" onClick={closeOverlays} />
 
         {searchOpen ? (
           <section className="utility-panel utility-panel--search" role="dialog" aria-modal="true" aria-label="Search products">
@@ -219,12 +241,73 @@ export function Header({ navLinks, products, socialLinks }) {
                 <X size={18} />
               </button>
             </div>
-            <p className="utility-panel__empty">
-              Your saved cart is empty in this demo build. Explore the editable Selah Starr Studio mock collection below.
-            </p>
-            <Button as="a" href="#bestsellers" onClick={() => setCartOpen(false)}>
-              Explore featured pieces
-            </Button>
+            {cartItems.length ? (
+              <>
+                <div className="utility-panel__cart-list">
+                  {cartItems.map(({ product, quantity }) => (
+                    <article key={product.id} className="utility-panel__cart-item">
+                      <a href={product.href} onClick={() => setCartOpen(false)}>
+                        <img src={product.images[0].src} alt={product.images[0].alt} />
+                      </a>
+                      <div className="utility-panel__cart-copy">
+                        <a href={product.href} onClick={() => setCartOpen(false)}>
+                          <strong>{product.name}</strong>
+                        </a>
+                        <small>{product.priceLabel}</small>
+                        <div className="utility-panel__cart-controls">
+                          <button
+                            type="button"
+                            aria-label={`Decrease quantity for ${product.name}`}
+                            onClick={() => updateQuantity(product.id, quantity - 1)}
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span>{quantity}</span>
+                          <button
+                            type="button"
+                            aria-label={`Increase quantity for ${product.name}`}
+                            onClick={() => updateQuantity(product.id, quantity + 1)}
+                          >
+                            <Plus size={14} />
+                          </button>
+                          <button
+                            type="button"
+                            aria-label={`Remove ${product.name} from cart`}
+                            onClick={() => removeItem(product.id)}
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                <div className="utility-panel__cart-actions">
+                  <Button as="a" href={toCartRoute()} onClick={() => setCartOpen(false)}>
+                    View full cart
+                  </Button>
+                  <Button
+                    as="a"
+                    href={checkoutHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button--ghost button--whatsapp"
+                    onClick={closeOverlays}
+                  >
+                    Send cart on WhatsApp
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="utility-panel__empty">
+                  Your saved cart is empty. Add pieces from the collection to build a shortlist before you enquire.
+                </p>
+                <Button as="a" href="#/products" onClick={() => setCartOpen(false)}>
+                  Explore all pieces
+                </Button>
+              </>
+            )}
           </section>
         ) : null}
       </div>
