@@ -197,7 +197,7 @@ input:focus-visible {
 }
 
 .brand-mark em {
-  margin-top: -8px;
+  margin-top: -1px;
   font-family: var(--font-script);
   font-style: normal;
   font-size: clamp(1.08rem, 1.3vw, 1.55rem);
@@ -606,7 +606,19 @@ input:focus-visible {
 }
 
 .home-hero {
-  width: min(1600px, calc(100vw - 16px));
+  position: relative;
+  width: 100%;
+  padding: 0 clamp(8px, 1.2vw, 16px);
+  background-color: #f8f2e8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.home-hero__inner {
+  width: min(1600px, 100%);
   margin: 0 auto;
   padding: 32px 0 48px;
   display: grid;
@@ -615,18 +627,23 @@ input:focus-visible {
   gap: clamp(2rem, 5vw, 5rem);
 }
 
+.home-hero__inner,
 .home-hero__content,
 .home-hero__carousel {
   min-width: 0;
 }
 
 .home-hero__content {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 18px;
+  transform: translateY(-16px);
 }
 
 .home-hero__content .brand-mark {
-  margin-bottom: 6px;
+  margin-top: 4px;
+  margin-bottom: 40px;
 }
 
 .home-hero h1 {
@@ -663,6 +680,7 @@ input:focus-visible {
 
 .home-hero__carousel {
   position: relative;
+  z-index: 1;
 }
 
 .home-carousel {
@@ -2126,11 +2144,8 @@ input:focus-visible {
 }
 
 @media (max-width: 1100px) {
-  .home-hero {
+  .home-hero__inner {
     gap: clamp(1.5rem, 3vw, 2.75rem);
-  }
-
-  .home-hero {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   }
 
@@ -2181,7 +2196,7 @@ input:focus-visible {
     top: 94px;
   }
 
-  .home-hero {
+  .home-hero__inner {
     grid-template-columns: 1fr;
     gap: 28px;
     padding-top: 22px;
@@ -2287,6 +2302,10 @@ input:focus-visible {
   }
 
   .home-hero {
+    padding-inline: 12px;
+  }
+
+  .home-hero__inner {
     padding-bottom: 30px;
   }
 
