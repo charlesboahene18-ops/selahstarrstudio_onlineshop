@@ -68,11 +68,6 @@ export const themeHeroContent = {
   secondaryCta: 'Request a Custom Piece on WhatsApp',
   secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
   secondaryExternal: true,
-  scriptText: 'Wearable Art',
-  badgeText: 'S',
-  showcaseAnnouncementText: announcementMessages.join(' · '),
-  showcaseBrandLabel: brand.shortName,
-  showcaseSocialHandle: brand.instagramHandle,
 }
 
 export const launchContent = {
@@ -449,101 +444,5 @@ export const footerContent = {
   },
   copyright: `© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`,
 }
-
-export const showcaseSlides = [
-  {
-    key: 'custom-order',
-    label: 'custom order slide',
-    type: 'launch',
-    title: 'Custom Piece Preview',
-    description: 'Three mock visuals showing the studio’s made-to-order and wearable-art direction.',
-    mobileTitle: 'Custom piece',
-    mobileDescription: 'Personal beadwork and made-to-order wearable art.',
-    cta: 'Start a custom order on WhatsApp',
-    images: launchContent.images,
-    mobileImage: launchContent.images[0],
-    miniImages: [launchContent.images[0], launchContent.images[2]],
-  },
-  {
-    key: 'featured-collections',
-    label: 'featured collections slide',
-    type: 'collection',
-    title: 'Beaded Creations',
-    description: 'Category cards centered on handmade jewellery, custom pieces, and wearable art.',
-    mobileTitle: 'Collections',
-    mobileDescription: 'Beaded jewellery, bralettes, custom pieces, and wearable art.',
-    cta: 'Browse collections',
-    items: featuredCollections,
-    mobileImage: {
-      src: featuredCollections[0].image,
-      alt: featuredCollections[0].imageAlt,
-    },
-    miniImages: featuredCollections.slice(0, 2).map((item) => ({
-      src: item.image,
-      alt: item.imageAlt,
-    })),
-  },
-  {
-    key: 'studio-categories',
-    label: 'studio categories slide',
-    type: 'collection',
-    title: 'Studio Categories',
-    description: 'Additional category previews for necklaces, bracelets, earrings, and waist beads.',
-    mobileTitle: 'Studio pieces',
-    mobileDescription: 'Necklaces, bracelets, earrings, and waist beads.',
-    cta: 'View more',
-    items: studioCollections,
-    mobileImage: {
-      src: studioCollections[0].image,
-      alt: studioCollections[0].imageAlt,
-    },
-    miniImages: studioCollections.slice(0, 2).map((item) => ({
-      src: item.image,
-      alt: item.imageAlt,
-    })),
-  },
-  {
-    key: 'featured-products',
-    label: 'featured products slide',
-    type: 'bestsellers',
-    title: 'Featured Creations',
-    description: 'Editable mock product cards with contact-for-pricing labels and handmade storytelling.',
-    mobileTitle: 'Featured pieces',
-    mobileDescription: 'Customisable mock products for the Selah Starr Studio catalogue.',
-    cta: 'Enquire on WhatsApp',
-    items: featuredProducts,
-    mobileImage: featuredProducts[0].images[0],
-    miniImages: featuredProducts.slice(0, 2).map((item) => ({
-      src: item.images[0].src,
-      alt: item.images[0].alt,
-    })),
-  },
-  {
-    key: 'mission',
-    label: 'mission slide',
-    type: 'mission',
-    title: 'Jewellery Made to Tell Your Story',
-    description: 'A soft collage and brand story focused on beadwork, individuality, and handmade detail.',
-    mobileTitle: 'Our story',
-    mobileDescription: 'Handmade jewellery, colour stories, and wearable art.',
-    cta: 'Discover our story',
-    images: missionContent.images,
-    mobileImage: missionContent.images[1],
-    miniImages: missionContent.images.slice(0, 2),
-  },
-  {
-    key: 'social',
-    label: 'social collage slide',
-    type: 'social',
-    title: 'Follow Our Journey',
-    description: 'A branded social collage with temporary mock assets and the studio’s Instagram handle.',
-    mobileTitle: 'Follow us',
-    mobileDescription: 'Studio moments and temporary mock social imagery.',
-    cta: `Follow ${brand.instagramHandle}`,
-    images: socialContent.images.slice(0, 4),
-    mobileImage: socialContent.images[1],
-    miniImages: socialContent.images.slice(0, 2),
-  },
-]
 
 export { allProducts, brand, featuredProducts }

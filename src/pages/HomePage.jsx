@@ -20,15 +20,15 @@ import {
   missionContent,
   featuredProducts,
   productSection,
-  showcaseSlides,
   socialContent,
   themeHeroContent,
 } from '../data/storefrontContent'
+import { homeCarouselSlides } from '../data/homeCarouselSlides'
 
 export function HomePage() {
   return (
     <>
-      <ThemeShowcaseHero content={themeHeroContent} slides={showcaseSlides} />
+      <ThemeShowcaseHero content={themeHeroContent} slides={homeCarouselSlides} />
       <LaunchHero content={launchContent} />
       <CollectionGrid
         id={collectionSections.featured.id}

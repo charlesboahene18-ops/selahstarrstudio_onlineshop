@@ -1,12 +1,11 @@
 import { BrandMark } from './BrandMark'
 import { Button } from './Button'
-import { ShowcaseSlider } from './ShowcaseSlider'
-import heroSurface from '../assets/backgrounds/theme-hero-surface.svg'
+import { HomeCarousel } from './HomeCarousel'
 
 export function ThemeShowcaseHero({ content, slides }) {
   return (
-    <section className="theme-showcase-hero" id="home" style={{ backgroundImage: `url(${heroSurface})` }}>
-      <div className="theme-showcase-hero__copy">
+    <section className="home-hero" id="home">
+      <div className="home-hero__content">
         <BrandMark />
         <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
         <h1>
@@ -30,18 +29,11 @@ export function ThemeShowcaseHero({ content, slides }) {
         </div>
       </div>
 
-      <div className="theme-showcase-hero__stage">
-        <span className="theme-showcase-hero__script theme-showcase-hero__script--left">{content.scriptText}</span>
-        <span className="theme-showcase-hero__script theme-showcase-hero__script--right">{content.scriptText}</span>
-        <div className="theme-showcase-hero__badge" aria-hidden="true">
-          <span>{content.badgeText}</span>
-        </div>
-        <ShowcaseSlider
-          slides={slides}
-          announcementText={content.showcaseAnnouncementText}
-          brandLabel={content.showcaseBrandLabel}
-          socialHandle={content.showcaseSocialHandle}
-        />
+      <div className="home-hero__carousel">
+          <HomeCarousel
+            slides={slides}
+            ariaLabel="Selah Starr Studio featured designs"
+          />
       </div>
     </section>
   )
