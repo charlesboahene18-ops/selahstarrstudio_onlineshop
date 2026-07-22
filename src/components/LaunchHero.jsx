@@ -27,7 +27,12 @@ export function LaunchHero({ content }) {
           <div className="launch-hero__stack">
             {content.images.map((image, index) => (
               <figure key={image.alt} className={`launch-hero__card launch-hero__card--${index + 1}`}>
-                <img src={image.src} alt={image.alt} loading="lazy" />
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  style={{ objectPosition: image.objectPosition || 'center' }}
+                />
               </figure>
             ))}
           </div>

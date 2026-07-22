@@ -1,4 +1,3 @@
-import { BrandMark } from './BrandMark'
 import { Button } from './Button'
 import { HomeCarousel } from './HomeCarousel'
 import selahStarrWatermark from '../assets/Image Jul 21, 2026 at 07_59_05 PM.png'
@@ -14,7 +13,6 @@ export function ThemeShowcaseHero({ content, slides }) {
     >
       <div className="home-hero__inner">
         <div className="home-hero__content">
-          <BrandMark />
           <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
           <h1>
             <span className="theme-showcase-hero__serif">{content.serifTitle}</span>

@@ -643,7 +643,7 @@ input:focus-visible {
 
 .home-hero__content .brand-mark {
   margin-top: 4px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .home-hero h1 {
@@ -1383,7 +1383,9 @@ input:focus-visible {
 }
 
 .launch-hero__stack {
-  min-height: 560px;
+  width: 100%;
+  max-width: 720px;
+  min-height: 620px;
   position: relative;
 }
 
@@ -1392,6 +1394,8 @@ input:focus-visible {
   margin: 0;
   padding: 12px;
   background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  overflow: hidden;
   box-shadow: var(--shadow-soft);
 }
 
@@ -1402,18 +1406,30 @@ input:focus-visible {
 }
 
 .launch-hero__card--1 {
-  inset: 20px 210px 150px 0;
-  transform: rotate(-4deg);
+  width: 48%;
+  height: 58%;
+  top: 0;
+  left: 4%;
+  transform: rotate(-6deg);
+  z-index: 1;
 }
 
 .launch-hero__card--2 {
-  inset: 74px 70px 76px 150px;
-  transform: rotate(3deg);
+  width: 49%;
+  height: 60%;
+  top: 12%;
+  right: 6%;
+  transform: rotate(5deg);
+  z-index: 2;
 }
 
 .launch-hero__card--3 {
-  inset: 260px 0 0 250px;
+  width: 46%;
+  height: 50%;
+  right: 0;
+  bottom: 0;
   transform: rotate(-2deg);
+  z-index: 3;
 }
 
 .collection-grid-section__grid,
@@ -2257,19 +2273,33 @@ input:focus-visible {
   }
 
   .launch-hero__stack {
-    min-height: 480px;
+    max-width: 620px;
+    min-height: 520px;
+    margin-inline: auto;
   }
 
   .launch-hero__card--1 {
-    inset: 0 120px 160px 0;
+    width: 52%;
+    height: 56%;
+    top: 0;
+    left: 2%;
+    transform: rotate(-4deg);
   }
 
   .launch-hero__card--2 {
-    inset: 84px 0 84px 96px;
+    width: 54%;
+    height: 58%;
+    top: 11%;
+    right: 2%;
+    transform: rotate(4deg);
   }
 
   .launch-hero__card--3 {
-    inset: 270px 20px 0 130px;
+    width: 50%;
+    height: 46%;
+    right: 4%;
+    bottom: 0;
+    transform: rotate(-1deg);
   }
 
   .social-collage__heading {
@@ -2353,19 +2383,37 @@ input:focus-visible {
   }
 
   .launch-hero__stack {
-    min-height: 410px;
+    max-width: 430px;
+    min-height: 460px;
+    margin: 2.5rem auto 0;
+  }
+
+  .launch-hero__card {
+    padding: 10px;
   }
 
   .launch-hero__card--1 {
-    inset: 0 88px 136px 0;
+    width: 62%;
+    height: 56%;
+    top: 0;
+    left: 0;
+    transform: rotate(-3deg);
   }
 
   .launch-hero__card--2 {
-    inset: 64px 0 72px 78px;
+    width: 62%;
+    height: 58%;
+    top: 11%;
+    right: 0;
+    transform: rotate(3deg);
   }
 
   .launch-hero__card--3 {
-    inset: 226px 10px 0 100px;
+    width: 60%;
+    height: 48%;
+    right: 3%;
+    bottom: 0;
+    transform: rotate(-1deg);
   }
 
   .collection-card__image {

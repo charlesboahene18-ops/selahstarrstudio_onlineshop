@@ -6,9 +6,9 @@ import blogLayering from '../assets/editorial/blog-layering.svg'
 import blogOccasion from '../assets/editorial/blog-occasion.svg'
 import missionPortrait from '../assets/editorial/mission-portrait.svg'
 import missionStudio from '../assets/editorial/mission-studio.svg'
-import heroPortrait from '../assets/hero/hero-portrait.svg'
-import braceletStack from '../assets/products/bracelet-stack.svg'
-import goldPendant from '../assets/products/gold-pendant.svg'
+import customOrderPearlSet from '../assets/custom-order-pearl-set.jpg'
+import customOrderPurpleCuff from '../assets/custom-order-arm-cuffs.jpg'
+import customOrderGoldChoker from '../assets/custom-order-gold-choker.jpg'
 import socialPendant from '../assets/social/social-pendant.svg'
 import socialPortrait from '../assets/social/social-portrait.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
@@ -81,16 +81,19 @@ export const launchContent = {
   external: true,
   images: [
     {
-      src: braceletStack,
-      alt: 'Temporary mock image representing a custom beaded bracelet concept by Selah Starr Studio',
+      src: customOrderPearlSet,
+      alt: 'Freshwater pearl necklace, bracelet and earrings by Selah Starr Studio',
+      objectPosition: 'center top',
     },
     {
-      src: heroPortrait,
-      alt: 'Temporary mock image representing a custom wearable art portrait for Selah Starr Studio',
+      src: customOrderPurpleCuff,
+      alt: 'Purple handmade wire arm cuff by Selah Starr Studio',
+      objectPosition: 'center top',
     },
     {
-      src: goldPendant,
-      alt: 'Temporary mock image representing a custom necklace concept by Selah Starr Studio',
+      src: customOrderGoldChoker,
+      alt: 'Gold handmade wire choker on a red jewellery display by Selah Starr Studio',
+      objectPosition: 'center 38%',
     },
   ],
 }
