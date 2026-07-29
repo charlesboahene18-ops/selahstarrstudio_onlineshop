@@ -18,6 +18,24 @@ export function buildProductWhatsAppUrl(productName) {
   return buildWhatsAppUrl(`Hello ${brand.name}, I am interested in ${productName}.`)
 }
 
+export function buildCartWhatsAppUrl(cartItems) {
+  if (!cartItems.length) {
+    return buildWhatsAppUrl(`Hello ${brand.name}, I would like help choosing a piece.`)
+  }
+
+  const itemLines = cartItems.map(
+    ({ product, quantity }) => `- ${product.name} x${quantity}`,
+  )
+
+  return buildWhatsAppUrl(
+    [
+      `Hello ${brand.name}, I would like to enquire about these saved pieces:`,
+      ...itemLines,
+      'Please confirm availability, customisation options, and pricing.',
+    ].join('\n\n'),
+  )
+}
+
 export function buildCustomOrderWhatsAppUrl({ name = '', contact = '', details = '' }) {
   const messageParts = [
     whatsappMessages.customOrder,

@@ -1,47 +1,46 @@
-import { BrandMark } from './BrandMark'
 import { Button } from './Button'
-import { ShowcaseSlider } from './ShowcaseSlider'
-import heroSurface from '../assets/backgrounds/theme-hero-surface.svg'
+import { HomeCarousel } from './HomeCarousel'
+import selahStarrWatermark from '../assets/Image Jul 21, 2026 at 07_59_05 PM.png'
 
 export function ThemeShowcaseHero({ content, slides }) {
   return (
-    <section className="theme-showcase-hero" id="home" style={{ backgroundImage: `url(${heroSurface})` }}>
-      <div className="theme-showcase-hero__copy">
-        <BrandMark />
-        <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
-        <h1>
-          <span className="theme-showcase-hero__serif">{content.serifTitle}</span>
-          <span className="theme-showcase-hero__sans">{content.sansTitle}</span>
-        </h1>
-        <p className="theme-showcase-hero__description">{content.description}</p>
-        <div className="theme-showcase-hero__actions">
-          <Button as="a" href={content.primaryHref}>
-            {content.primaryCta}
-          </Button>
-          <Button
-            as="a"
-            href={content.secondaryHref}
-            target={content.secondaryExternal ? '_blank' : undefined}
-            rel={content.secondaryExternal ? 'noopener noreferrer' : undefined}
-            className="button--ghost button--whatsapp"
-          >
-            {content.secondaryCta}
-          </Button>
+    <section
+      className="home-hero"
+      id="home"
+      style={{
+        backgroundImage: `linear-gradient(rgba(250, 247, 241, 0.91), rgba(250, 247, 241, 0.91)), url("${selahStarrWatermark}")`,
+      }}
+    >
+      <div className="home-hero__inner">
+        <div className="home-hero__content">
+          <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
+          <h1>
+            <span className="theme-showcase-hero__serif">{content.serifTitle}</span>
+            <span className="theme-showcase-hero__sans">{content.sansTitle}</span>
+          </h1>
+          <p className="theme-showcase-hero__description">{content.description}</p>
+          <div className="theme-showcase-hero__actions">
+            <Button as="a" href={content.primaryHref}>
+              {content.primaryCta}
+            </Button>
+            <Button
+              as="a"
+              href={content.secondaryHref}
+              target={content.secondaryExternal ? '_blank' : undefined}
+              rel={content.secondaryExternal ? 'noopener noreferrer' : undefined}
+              className="button--ghost button--whatsapp"
+            >
+              {content.secondaryCta}
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <div className="theme-showcase-hero__stage">
-        <span className="theme-showcase-hero__script theme-showcase-hero__script--left">{content.scriptText}</span>
-        <span className="theme-showcase-hero__script theme-showcase-hero__script--right">{content.scriptText}</span>
-        <div className="theme-showcase-hero__badge" aria-hidden="true">
-          <span>{content.badgeText}</span>
+        <div className="home-hero__carousel">
+          <HomeCarousel
+            slides={slides}
+            ariaLabel="Selah Starr Studio featured designs"
+          />
         </div>
-        <ShowcaseSlider
-          slides={slides}
-          announcementText={content.showcaseAnnouncementText}
-          brandLabel={content.showcaseBrandLabel}
-          socialHandle={content.showcaseSocialHandle}
-        />
       </div>
     </section>
   )

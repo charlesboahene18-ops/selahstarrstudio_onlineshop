@@ -1,7 +1,10 @@
-import { Eye } from 'lucide-react'
+import { Eye, ShoppingBag } from 'lucide-react'
 import { Button } from './Button'
+import { useCart } from '../hooks/useCart'
 
 export function ProductCard({ product }) {
+  const { addItem } = useCart()
+
   return (
     <article className="product-card">
       <a className="product-card__image" href={product.href}>
@@ -17,11 +20,21 @@ export function ProductCard({ product }) {
         <p>{product.priceLabel}</p>
         <div className="product-card__actions">
           <Button
+            as="button"
+            type="button"
+            className="button--small"
+            onClick={() => addItem(product.id)}
+            aria-label={`Add ${product.name} to cart`}
+          >
+            <ShoppingBag size={14} />
+            Add to cart
+          </Button>
+          <Button
             as="a"
             href={product.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="button--small button--stacked button--whatsapp"
+            className="button--small button--whatsapp"
             aria-label={`${product.whatsappLabel} for ${product.name}`}
           >
             {product.whatsappLabel}

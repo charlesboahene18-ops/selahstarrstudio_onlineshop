@@ -6,9 +6,9 @@ import blogLayering from '../assets/editorial/blog-layering.svg'
 import blogOccasion from '../assets/editorial/blog-occasion.svg'
 import missionPortrait from '../assets/editorial/mission-portrait.svg'
 import missionStudio from '../assets/editorial/mission-studio.svg'
-import heroPortrait from '../assets/hero/hero-portrait.svg'
-import braceletStack from '../assets/products/bracelet-stack.svg'
-import goldPendant from '../assets/products/gold-pendant.svg'
+import customOrderPearlSet from '../assets/custom-order-pearl-set.jpg'
+import customOrderPurpleCuff from '../assets/custom-order-arm-cuffs.jpg'
+import customOrderGoldChoker from '../assets/custom-order-gold-choker.jpg'
 import socialPendant from '../assets/social/social-pendant.svg'
 import socialPortrait from '../assets/social/social-portrait.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
@@ -17,6 +17,13 @@ import socialWatch from '../assets/social/social-watch.svg'
 import { featuredCollections, studioCollections } from './collectionData'
 import { allProducts, featuredProducts } from './mockProducts'
 import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
+import {
+  toCollectionRoute,
+  toHomeSection,
+  toJournalPostRoute,
+  toJournalRoute,
+  toProductsRoute,
+} from '../utils/routes'
 
 export const announcementMessages = [
   'Handmade pieces created with care',
@@ -42,11 +49,11 @@ export const socialLinks = [
 ]
 
 export const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Collections', href: '#collections' },
-  { label: 'Custom Orders', href: '#custom-order-form' },
-  { label: 'Journal', href: '#journal' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: toHomeSection('home') },
+  { label: 'Collections', href: toProductsRoute() },
+  { label: 'Custom Orders', href: toHomeSection('custom-order-form') },
+  { label: 'Journal', href: toJournalRoute() },
+  { label: 'Contact', href: toHomeSection('contact') },
 ]
 
 export const headerSocialLinks = socialLinks
@@ -57,15 +64,10 @@ export const themeHeroContent = {
   sansTitle: 'With Soul & Sparkle',
   description: brand.heroSupportingCopy,
   primaryCta: 'Shop the Collection',
-  primaryHref: '#collections',
+  primaryHref: toProductsRoute(),
   secondaryCta: 'Request a Custom Piece on WhatsApp',
   secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
   secondaryExternal: true,
-  scriptText: 'Wearable Art',
-  badgeText: 'S',
-  showcaseAnnouncementText: announcementMessages.join(' · '),
-  showcaseBrandLabel: brand.shortName,
-  showcaseSocialHandle: brand.instagramHandle,
 }
 
 export const launchContent = {
@@ -79,16 +81,19 @@ export const launchContent = {
   external: true,
   images: [
     {
-      src: braceletStack,
-      alt: 'Temporary mock image representing a custom beaded bracelet concept by Selah Starr Studio',
+      src: customOrderPearlSet,
+      alt: 'Freshwater pearl necklace, bracelet and earrings by Selah Starr Studio',
+      objectPosition: 'center top',
     },
     {
-      src: heroPortrait,
-      alt: 'Temporary mock image representing a custom wearable art portrait for Selah Starr Studio',
+      src: customOrderPurpleCuff,
+      alt: 'Purple handmade wire arm cuff by Selah Starr Studio',
+      objectPosition: 'center top',
     },
     {
-      src: goldPendant,
-      alt: 'Temporary mock image representing a custom necklace concept by Selah Starr Studio',
+      src: customOrderGoldChoker,
+      alt: 'Gold handmade wire choker on a red jewellery display by Selah Starr Studio',
+      objectPosition: 'center 38%',
     },
   ],
 }
@@ -120,7 +125,7 @@ export const giftBannerContent = {
   description:
     'Celebrate someone special with a handcrafted piece created with colour, detail and personal meaning.',
   cta: 'Explore Gift Ideas',
-  href: '#bestsellers',
+  href: toProductsRoute(),
   background: chainBanner,
 }
 
@@ -265,6 +270,7 @@ export const blogSection = {
 
 export const blogPosts = [
   {
+    slug: 'styling-statement-beadwork-with-confidence',
     category: 'Draft Styling Guide',
     title: 'Styling Statement Beadwork With Confidence',
     excerpt:
@@ -272,9 +278,30 @@ export const blogPosts = [
     image: blogLayering,
     imageAlt:
       'Temporary mock image representing a draft styling article for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('styling-statement-beadwork-with-confidence'),
+    readingTime: '4 min read',
+    introduction:
+      'This draft journal entry explores how Selah Starr Studio statement beadwork can stay expressive without overwhelming the full outfit.',
+    sections: [
+      {
+        heading: 'Start With One Lead Piece',
+        body:
+          'Choose the necklace, earring set, or body piece you want to build around first. Let that handcrafted focal point guide your neckline, sleeve volume, and colour balance.',
+      },
+      {
+        heading: 'Give Colour Room To Breathe',
+        body:
+          'When beadwork is already doing visual work, cleaner fabric silhouettes usually create the strongest contrast. Simple cuts allow texture and colour placement to stay intentional.',
+      },
+      {
+        heading: 'Repeat A Detail, Not The Whole Palette',
+        body:
+          'A single accent colour repeated in shoes, makeup, or a bag often feels more refined than matching every shade in the piece. The jewellery remains the main event.',
+      },
+    ],
   },
   {
+    slug: 'how-to-care-for-handmade-beaded-pieces',
     category: 'Draft Care Guide',
     title: 'How to Care for Handmade Beaded Pieces',
     excerpt:
@@ -282,9 +309,30 @@ export const blogPosts = [
     image: blogCare,
     imageAlt:
       'Temporary mock image representing a draft care guide for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('how-to-care-for-handmade-beaded-pieces'),
+    readingTime: '3 min read',
+    introduction:
+      'This draft care guide outlines the baseline habits that help handmade beadwork retain its shape, finish, and visual clarity over time.',
+    sections: [
+      {
+        heading: 'Store Pieces Separately',
+        body:
+          'Keeping handcrafted items in separate pouches or compartments reduces tangling, friction, and unnecessary stress on closures or woven sections.',
+      },
+      {
+        heading: 'Keep Moisture And Chemicals Away',
+        body:
+          'Perfume, lotion, and humidity can all affect delicate materials differently. It is safer to add jewellery after getting dressed and to keep pieces dry when not in use.',
+      },
+      {
+        heading: 'Check Fit Before Each Wear',
+        body:
+          'For made-to-measure or more sculptural pieces, a quick check of ties, clasps, and bead tension helps catch small issues before they become larger repairs.',
+      },
+    ],
   },
   {
+    slug: 'choosing-colours-for-a-custom-jewellery-design',
     category: 'Draft Custom Guide',
     title: 'Choosing Colours for a Custom Jewellery Design',
     excerpt:
@@ -292,7 +340,27 @@ export const blogPosts = [
     image: blogOccasion,
     imageAlt:
       'Temporary mock image representing a draft custom design article for Selah Starr Studio',
-    href: '#contact',
+    href: toJournalPostRoute('choosing-colours-for-a-custom-jewellery-design'),
+    readingTime: '5 min read',
+    introduction:
+      'This draft custom-order note helps clients think through colour in a way that feels personal, wearable, and connected to the occasion.',
+    sections: [
+      {
+        heading: 'Begin With Mood Before Shade',
+        body:
+          'Words like celebratory, grounded, soft, bold, or ceremonial are often more useful than naming exact colours immediately. Mood gives the design direction.',
+      },
+      {
+        heading: 'Match The Piece To The Moment',
+        body:
+          'A commission for a wedding guest look, performance costume, or editorial shoot may need a very different colour rhythm from an everyday accessory.',
+      },
+      {
+        heading: 'Use Skin Tone And Wardrobe As Reference',
+        body:
+          'Bringing a few garments, inspiration images, or fabric tones into the conversation helps the studio shape a palette that feels lived-in rather than random.',
+      },
+    ],
   },
 ]
 
@@ -300,9 +368,9 @@ export const footerLinkGroups = [
   {
     title: 'Shop',
     links: [
-      { label: 'Handmade Jewellery', href: '#collections' },
-      { label: 'Wearable Art', href: '#studio-categories' },
-      { label: 'Featured Creations', href: '#bestsellers' },
+      { label: 'Handmade Jewellery', href: toCollectionRoute('beaded-jewellery') },
+      { label: 'Wearable Art', href: toCollectionRoute('wearable-art') },
+      { label: 'Featured Creations', href: toProductsRoute() },
     ],
   },
   {
@@ -379,101 +447,5 @@ export const footerContent = {
   },
   copyright: `© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`,
 }
-
-export const showcaseSlides = [
-  {
-    key: 'custom-order',
-    label: 'custom order slide',
-    type: 'launch',
-    title: 'Custom Piece Preview',
-    description: 'Three mock visuals showing the studio’s made-to-order and wearable-art direction.',
-    mobileTitle: 'Custom piece',
-    mobileDescription: 'Personal beadwork and made-to-order wearable art.',
-    cta: 'Start a custom order on WhatsApp',
-    images: launchContent.images,
-    mobileImage: launchContent.images[0],
-    miniImages: [launchContent.images[0], launchContent.images[2]],
-  },
-  {
-    key: 'featured-collections',
-    label: 'featured collections slide',
-    type: 'collection',
-    title: 'Beaded Creations',
-    description: 'Category cards centered on handmade jewellery, custom pieces, and wearable art.',
-    mobileTitle: 'Collections',
-    mobileDescription: 'Beaded jewellery, bralettes, custom pieces, and wearable art.',
-    cta: 'Browse collections',
-    items: featuredCollections,
-    mobileImage: {
-      src: featuredCollections[0].image,
-      alt: featuredCollections[0].imageAlt,
-    },
-    miniImages: featuredCollections.slice(0, 2).map((item) => ({
-      src: item.image,
-      alt: item.imageAlt,
-    })),
-  },
-  {
-    key: 'studio-categories',
-    label: 'studio categories slide',
-    type: 'collection',
-    title: 'Studio Categories',
-    description: 'Additional category previews for necklaces, bracelets, earrings, and waist beads.',
-    mobileTitle: 'Studio pieces',
-    mobileDescription: 'Necklaces, bracelets, earrings, and waist beads.',
-    cta: 'View more',
-    items: studioCollections,
-    mobileImage: {
-      src: studioCollections[0].image,
-      alt: studioCollections[0].imageAlt,
-    },
-    miniImages: studioCollections.slice(0, 2).map((item) => ({
-      src: item.image,
-      alt: item.imageAlt,
-    })),
-  },
-  {
-    key: 'featured-products',
-    label: 'featured products slide',
-    type: 'bestsellers',
-    title: 'Featured Creations',
-    description: 'Editable mock product cards with contact-for-pricing labels and handmade storytelling.',
-    mobileTitle: 'Featured pieces',
-    mobileDescription: 'Customisable mock products for the Selah Starr Studio catalogue.',
-    cta: 'Enquire on WhatsApp',
-    items: featuredProducts,
-    mobileImage: featuredProducts[0].images[0],
-    miniImages: featuredProducts.slice(0, 2).map((item) => ({
-      src: item.images[0].src,
-      alt: item.images[0].alt,
-    })),
-  },
-  {
-    key: 'mission',
-    label: 'mission slide',
-    type: 'mission',
-    title: 'Jewellery Made to Tell Your Story',
-    description: 'A soft collage and brand story focused on beadwork, individuality, and handmade detail.',
-    mobileTitle: 'Our story',
-    mobileDescription: 'Handmade jewellery, colour stories, and wearable art.',
-    cta: 'Discover our story',
-    images: missionContent.images,
-    mobileImage: missionContent.images[1],
-    miniImages: missionContent.images.slice(0, 2),
-  },
-  {
-    key: 'social',
-    label: 'social collage slide',
-    type: 'social',
-    title: 'Follow Our Journey',
-    description: 'A branded social collage with temporary mock assets and the studio’s Instagram handle.',
-    mobileTitle: 'Follow us',
-    mobileDescription: 'Studio moments and temporary mock social imagery.',
-    cta: `Follow ${brand.instagramHandle}`,
-    images: socialContent.images.slice(0, 4),
-    mobileImage: socialContent.images[1],
-    miniImages: socialContent.images.slice(0, 2),
-  },
-]
 
 export { allProducts, brand, featuredProducts }

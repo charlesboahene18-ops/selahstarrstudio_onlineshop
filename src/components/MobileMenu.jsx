@@ -1,6 +1,7 @@
 import { Button } from './Button'
 import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
 import { SocialLinks } from './SocialLinks'
+import { toCartRoute } from '../utils/routes'
 
 export function MobileMenu({ open, navLinks, socialLinks, onClose, firstLinkRef }) {
   return (
@@ -16,6 +17,9 @@ export function MobileMenu({ open, navLinks, socialLinks, onClose, firstLinkRef 
             {link.label}
           </a>
         ))}
+        <a href={toCartRoute()} onClick={onClose}>
+          Saved cart
+        </a>
         <SocialLinks
           links={socialLinks}
           className="mobile-menu__social"
