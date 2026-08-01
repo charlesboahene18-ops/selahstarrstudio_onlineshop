@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
+  ChevronDown,
+  Headset,
   Menu,
   Search,
   ShoppingBag,
   X,
-  Headset,
 } from 'lucide-react'
+import { DesktopMegaMenu } from './DesktopMegaMenu'
 import { MobileMenu } from './MobileMenu'
-import { NavigationDropdown } from './NavigationDropdown'
 import { brand } from '../config/brand'
 import { useCart } from '../hooks/useCart'
 import { toCartRoute, toHomeSection } from '../utils/routes'
@@ -16,9 +17,10 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   const { itemCount } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [openDropdownLabel, setOpenDropdownLabel] = useState(null)
+  const [activeMenuLabel, setActiveMenuLabel] = useState(null)
   const [query, setQuery] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
+  const [shouldFocusFirstMenuItem, setShouldFocusFirstMenuItem] = useState(false)
   const menuButtonRef = useRef(null)
   const desktopSearchButtonRef = useRef(null)
   const mobileSearchButtonRef = useRef(null)
@@ -26,15 +28,63 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   const firstFocusableRef = useRef(null)
   const mobileMenuPanelRef = useRef(null)
   const searchInputRef = useRef(null)
-  const searchPanelRef = useRef(null)
   const wasMenuOpenRef = useRef(false)
+  const desktopHeaderRef = useRef(null)
+  const desktopFirstMenuLinkRef = useRef(null)
+  const activeMenuTriggerRef = useRef(null)
+  const closeTimerRef = useRef(null)
 
-  const anyOverlayOpen = menuOpen || searchOpen
+  const anyOverlayOpen = menuOpen
+  const activeMenu = navLinks.find((link) => link.label === activeMenuLabel) ?? null
+
+  const clearCloseTimer = () => {
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }
+
+  const closeDesktopMenu = ({ restoreFocus = false } = {}) => {
+    clearCloseTimer()
+    setActiveMenuLabel(null)
+    setShouldFocusFirstMenuItem(false)
+
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => {
+        activeMenuTriggerRef.current?.focus()
+      })
+    }
+  }
+
+  const openDesktopMenu = (label, { trigger = null, focusFirstItem = false } = {}) => {
+    clearCloseTimer()
+    setSearchOpen(false)
+
+    if (trigger) {
+      activeMenuTriggerRef.current = trigger
+    }
+
+    setActiveMenuLabel(label)
+    setShouldFocusFirstMenuItem(focusFirstItem)
+  }
+
+  const scheduleDesktopMenuClose = () => {
+    clearCloseTimer()
+    closeTimerRef.current = window.setTimeout(() => {
+      setActiveMenuLabel(null)
+      setShouldFocusFirstMenuItem(false)
+      closeTimerRef.current = null
+    }, 160)
+  }
+
+  const cancelDesktopMenuClose = () => {
+    clearCloseTimer()
+  }
 
   const closeOverlays = () => {
     setMenuOpen(false)
     setSearchOpen(false)
-    setOpenDropdownLabel(null)
+    closeDesktopMenu()
   }
 
   const closeSearch = ({ restoreFocus = false } = {}) => {
@@ -45,6 +95,22 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
         lastSearchTriggerRef.current?.focus()
       })
     }
+  }
+
+  const openSearch = (triggerRef) => {
+    lastSearchTriggerRef.current = triggerRef
+    setMenuOpen(false)
+    closeDesktopMenu()
+    setSearchOpen(true)
+  }
+
+  const toggleSearch = (triggerRef) => {
+    if (searchOpen) {
+      closeSearch({ restoreFocus: true })
+      return
+    }
+
+    openSearch(triggerRef)
   }
 
   useEffect(() => {
@@ -93,7 +159,9 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
       return undefined
     }
 
-    const selector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    const selector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+
     const onKeyDown = (event) => {
       if (event.key !== 'Tab') {
         return
@@ -131,44 +199,51 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   }, [searchOpen])
 
   useEffect(() => {
+    if (!activeMenuLabel || !shouldFocusFirstMenuItem) {
+      return undefined
+    }
+
+    window.requestAnimationFrame(() => {
+      desktopFirstMenuLinkRef.current?.focus()
+      setShouldFocusFirstMenuItem(false)
+    })
+
+    return undefined
+  }, [activeMenuLabel, shouldFocusFirstMenuItem])
+
+  useEffect(() => {
+    if (!activeMenuLabel) {
+      return undefined
+    }
+
+    const onPointerDown = (event) => {
+      if (!desktopHeaderRef.current?.contains(event.target)) {
+        clearCloseTimer()
+        setActiveMenuLabel(null)
+        setShouldFocusFirstMenuItem(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [activeMenuLabel])
+
+  useEffect(() => {
     if (!searchOpen) {
       return undefined
     }
 
-    const panel = searchPanelRef.current
-    if (!panel) {
-      return undefined
-    }
-
-    const selector =
-      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-
-    const onKeyDown = (event) => {
-      if (event.key !== 'Tab') {
-        return
-      }
-
-      const focusableElements = [...panel.querySelectorAll(selector)]
-
-      if (!focusableElements.length) {
-        return
-      }
-
-      const firstElement = focusableElements[0]
-      const lastElement = focusableElements[focusableElements.length - 1]
-
-      if (event.shiftKey && document.activeElement === firstElement) {
-        event.preventDefault()
-        lastElement.focus()
-      } else if (!event.shiftKey && document.activeElement === lastElement) {
-        event.preventDefault()
-        firstElement.focus()
+    const onPointerDown = (event) => {
+      if (!desktopHeaderRef.current?.contains(event.target)) {
+        closeSearch()
       }
     }
 
-    panel.addEventListener('keydown', onKeyDown)
-    return () => panel.removeEventListener('keydown', onKeyDown)
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [searchOpen])
+
+  useEffect(() => () => clearCloseTimer(), [])
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -181,20 +256,27 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
       } else if (menuOpen) {
         setMenuOpen(false)
         menuButtonRef.current?.focus()
-      } else if (openDropdownLabel) {
-        setOpenDropdownLabel(null)
+      } else if (activeMenuLabel) {
+        clearCloseTimer()
+        setActiveMenuLabel(null)
+        setShouldFocusFirstMenuItem(false)
+        window.requestAnimationFrame(() => {
+          activeMenuTriggerRef.current?.focus()
+        })
       }
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [menuOpen, openDropdownLabel, searchOpen])
+  }, [activeMenuLabel, menuOpen, searchOpen])
 
   useEffect(() => {
     const onHashChange = () => {
       setMenuOpen(false)
       setSearchOpen(false)
-      setOpenDropdownLabel(null)
+      clearCloseTimer()
+      setActiveMenuLabel(null)
+      setShouldFocusFirstMenuItem(false)
     }
 
     window.addEventListener('hashchange', onHashChange)
@@ -203,7 +285,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
 
   const filteredProducts = useMemo(() => {
     if (!query.trim()) {
-      return products.slice(0, 4)
+      return []
     }
 
     return products.filter((product) =>
@@ -218,14 +300,40 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
     ? `View shopping bag with ${itemCount} items`
     : 'View shopping bag'
 
+  const handleSearchSubmit = (event) => {
+    event.preventDefault()
+
+    const normalizedQuery = query.trim()
+
+    if (!normalizedQuery) {
+      return
+    }
+
+    setQuery(normalizedQuery)
+  }
+
   return (
     <>
       <header
+        ref={desktopHeaderRef}
         className={[
           'site-header',
           overlay ? 'site-header--overlay' : 'site-header--standard',
           isScrolled ? 'is-scrolled' : '',
+          activeMenuLabel ? 'site-header--menu-open' : '',
+          searchOpen ? 'site-header--search-open' : '',
         ].join(' ').trim()}
+        onMouseEnter={activeMenuLabel ? cancelDesktopMenuClose : undefined}
+        onMouseLeave={activeMenuLabel ? scheduleDesktopMenuClose : undefined}
+        onBlurCapture={
+          activeMenuLabel
+            ? (event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) {
+                  closeDesktopMenu()
+                }
+              }
+            : undefined
+        }
       >
         <div className="site-header__desktop">
           <a className="site-header__brand" href="#home" aria-label={`${brand.name} home`}>
@@ -233,17 +341,43 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
           </a>
 
           <nav className="site-header__nav" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <NavigationDropdown
-                key={link.label}
-                link={link}
-                isOpen={openDropdownLabel === link.label}
-                onOpen={() => setOpenDropdownLabel(link.label)}
-                onClose={() => {
-                  setOpenDropdownLabel((current) => (current === link.label ? null : current))
-                }}
-              />
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeMenuLabel === link.label
+
+              return (
+                <button
+                  key={link.label}
+                  type="button"
+                  className={`site-header__nav-trigger ${isActive ? 'is-active' : ''}`}
+                  onMouseEnter={(event) =>
+                    openDesktopMenu(link.label, { trigger: event.currentTarget })
+                  }
+                  onFocus={(event) =>
+                    openDesktopMenu(link.label, { trigger: event.currentTarget })
+                  }
+                  onClick={(event) =>
+                    openDesktopMenu(link.label, { trigger: event.currentTarget })
+                  }
+                  onKeyDown={(event) => {
+                    if (event.key === 'ArrowDown') {
+                      event.preventDefault()
+                      if (searchOpen) {
+                        setSearchOpen(false)
+                      }
+                      openDesktopMenu(link.label, {
+                        trigger: event.currentTarget,
+                        focusFirstItem: true,
+                      })
+                    }
+                  }}
+                  aria-expanded={isActive}
+                  aria-controls="desktop-mega-menu"
+                >
+                  <span>{link.label}</span>
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+              )
+            })}
           </nav>
 
           <div className="site-header__actions">
@@ -251,13 +385,10 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
               ref={desktopSearchButtonRef}
               type="button"
               className="site-header__icon-button"
-              aria-label="Search"
-              onClick={() => {
-                lastSearchTriggerRef.current = desktopSearchButtonRef.current
-                setMenuOpen(false)
-                setOpenDropdownLabel(null)
-                setSearchOpen(true)
-              }}
+              aria-label={searchOpen ? 'Close search' : 'Open search'}
+              aria-expanded={searchOpen}
+              aria-controls="header-search-panel"
+              onClick={() => toggleSearch(desktopSearchButtonRef.current)}
             >
               <Search size={19} strokeWidth={1.35} />
             </button>
@@ -283,6 +414,68 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
           </div>
         </div>
 
+        {activeMenu ? (
+          <DesktopMegaMenu
+            id="desktop-mega-menu"
+            menu={activeMenu}
+            firstLinkRef={desktopFirstMenuLinkRef}
+            onMouseEnter={cancelDesktopMenuClose}
+            onMouseLeave={scheduleDesktopMenuClose}
+            onClose={() => closeDesktopMenu()}
+          />
+        ) : null}
+
+        {searchOpen ? (
+          <div className="header-search" id="header-search-panel">
+            <form className="header-search__form" onSubmit={handleSearchSubmit}>
+              <label className="sr-only" htmlFor="header-search-input">
+                Search Selah Starr Studio
+              </label>
+              <input
+                ref={searchInputRef}
+                id="header-search-input"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="What can we help you find?"
+                className="header-search__input"
+                autoComplete="off"
+              />
+              <button
+                type="button"
+                className="header-search__close"
+                aria-label="Close search"
+                onClick={() => closeSearch({ restoreFocus: true })}
+              >
+                <X aria-hidden="true" />
+              </button>
+            </form>
+
+            {query.trim() ? (
+              <div className="header-search__results">
+                {filteredProducts.length ? (
+                  filteredProducts.map((product) => (
+                    <a
+                      key={product.id}
+                      href={product.href}
+                      className="header-search__result"
+                      onClick={() => closeSearch()}
+                    >
+                      <img src={product.images[0].src} alt={product.images[0].alt} />
+                      <span>
+                        <strong>{product.name}</strong>
+                        <small>{product.priceLabel}</small>
+                      </span>
+                    </a>
+                  ))
+                ) : (
+                  <p className="header-search__empty">No matching pieces yet. Try a broader keyword.</p>
+                )}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="site-header__mobile">
           <button
             ref={menuButtonRef}
@@ -290,7 +483,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
             className="site-header__icon-button site-header__menu-button"
             onClick={() => {
               setSearchOpen(false)
-              setOpenDropdownLabel(null)
+              closeDesktopMenu()
               setMenuOpen((current) => !current)
             }}
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -309,13 +502,10 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
               ref={mobileSearchButtonRef}
               type="button"
               className="site-header__icon-button"
-              aria-label="Search"
-              onClick={() => {
-                lastSearchTriggerRef.current = mobileSearchButtonRef.current
-                setMenuOpen(false)
-                setOpenDropdownLabel(null)
-                setSearchOpen(true)
-              }}
+              aria-label={searchOpen ? 'Close search' : 'Open search'}
+              aria-expanded={searchOpen}
+              aria-controls="header-search-panel"
+              onClick={() => toggleSearch(mobileSearchButtonRef.current)}
             >
               <Search size={19} strokeWidth={1.35} />
             </button>
@@ -344,52 +534,6 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
         />
       ) : null}
 
-      {searchOpen ? (
-        <div className="utility-overlay is-visible" aria-hidden={!searchOpen}>
-          <div className="utility-overlay__backdrop" onClick={() => closeSearch()} />
-
-          <section
-            ref={searchPanelRef}
-            className="utility-panel utility-panel--search"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Search products"
-          >
-            <div className="utility-panel__header">
-              <h2>Search the collection</h2>
-              <button type="button" onClick={() => closeSearch({ restoreFocus: true })} aria-label="Close search">
-                <X size={18} />
-              </button>
-            </div>
-            <label className="sr-only" htmlFor="site-search">
-              Search products
-            </label>
-            <input
-              id="site-search"
-              ref={searchInputRef}
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search handmade pieces"
-            />
-            <div className="utility-panel__results">
-              {filteredProducts.length ? (
-                filteredProducts.map((product) => (
-                  <a key={product.id} href={product.href} onClick={() => closeSearch()}>
-                    <img src={product.images[0].src} alt={product.images[0].alt} />
-                    <span>
-                      <strong>{product.name}</strong>
-                      <small>{product.priceLabel}</small>
-                    </span>
-                  </a>
-                ))
-              ) : (
-                <p className="utility-panel__empty">No matching pieces yet. Try a broader keyword.</p>
-              )}
-            </div>
-          </section>
-        </div>
-      ) : null}
     </>
   )
 }
