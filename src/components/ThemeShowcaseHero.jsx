@@ -1,46 +1,31 @@
-import { Button } from './Button'
-import { HomeCarousel } from './HomeCarousel'
-import selahStarrWatermark from '../assets/Image Jul 21, 2026 at 07_59_05 PM.png'
+import { Header } from './Header'
+import heroImage from '../assets/Image Aug 1, 2026 at 01_39_24 PM.png'
 
-export function ThemeShowcaseHero({ content, slides }) {
+export function ThemeShowcaseHero({ content, navLinks, products, socialLinks }) {
   return (
-    <section
-      className="home-hero"
-      id="home"
-      style={{
-        backgroundImage: `linear-gradient(rgba(250, 247, 241, 0.91), rgba(250, 247, 241, 0.91)), url("${selahStarrWatermark}")`,
-      }}
-    >
-      <div className="home-hero__inner">
-        <div className="home-hero__content">
-          <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
-          <h1>
-            <span className="theme-showcase-hero__serif">{content.serifTitle}</span>
-            <span className="theme-showcase-hero__sans">{content.sansTitle}</span>
-          </h1>
-          <p className="theme-showcase-hero__description">{content.description}</p>
-          <div className="theme-showcase-hero__actions">
-            <Button as="a" href={content.primaryHref}>
-              {content.primaryCta}
-            </Button>
-            <Button
-              as="a"
-              href={content.secondaryHref}
-              target={content.secondaryExternal ? '_blank' : undefined}
-              rel={content.secondaryExternal ? 'noopener noreferrer' : undefined}
-              className="button--ghost button--whatsapp"
-            >
-              {content.secondaryCta}
-            </Button>
-          </div>
-        </div>
+    <section className="home-hero" id="home">
+      <img
+        src={heroImage}
+        alt="Selah Starr Studio handcrafted jewellery collection"
+        className="home-hero__image"
+        loading="eager"
+        fetchPriority="high"
+      />
+      <div className="home-hero__top-gradient" aria-hidden="true" />
 
-        <div className="home-hero__carousel">
-          <HomeCarousel
-            slides={slides}
-            ariaLabel="Selah Starr Studio featured designs"
-          />
-        </div>
+      <Header
+        overlay
+        navLinks={navLinks}
+        products={products}
+        socialLinks={socialLinks}
+      />
+
+      <div className="home-hero__content">
+        <h1 className="home-hero__title">{content.title}</h1>
+        <p className="home-hero__promotion">{content.promotion}</p>
+        <a href={content.shopHref} className="home-hero__shop-link">
+          {content.shopLabel}
+        </a>
       </div>
     </section>
   )

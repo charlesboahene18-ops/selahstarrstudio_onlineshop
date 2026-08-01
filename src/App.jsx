@@ -25,6 +25,7 @@ import { parseHashRoute } from './utils/routes'
 
 export default function App() {
   const [route, setRoute] = useState(() => parseHashRoute(window.location.hash))
+  const isHomeRoute = route.name === 'home'
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -112,7 +113,9 @@ export default function App() {
     <CartProvider products={allProducts}>
       <div className="site-page">
         <AnnouncementMarquee messages={announcementMessages} />
-        <Header navLinks={navLinks} products={allProducts} socialLinks={headerSocialLinks} />
+        {isHomeRoute ? null : (
+          <Header navLinks={navLinks} products={allProducts} socialLinks={headerSocialLinks} />
+        )}
         <main>{page}</main>
         <Footer content={footerContent} groups={footerLinkGroups} />
       </div>

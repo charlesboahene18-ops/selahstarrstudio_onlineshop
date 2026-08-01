@@ -20,8 +20,8 @@ import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
 import {
   toCollectionRoute,
   toHomeSection,
-  toJournalPostRoute,
   toJournalRoute,
+  toJournalPostRoute,
   toProductsRoute,
 } from '../utils/routes'
 
@@ -48,26 +48,218 @@ export const socialLinks = [
   },
 ]
 
+const toCollectionMenuLink = (collection) => ({
+  label: collection.name,
+  description: collection.label,
+  href: collection.href,
+})
+
+const featuredCollectionLinks = featuredCollections.map(toCollectionMenuLink)
+const studioCollectionLinks = studioCollections.map(toCollectionMenuLink)
+
 export const navLinks = [
-  { label: 'Home', href: toHomeSection('home') },
-  { label: 'Collections', href: toProductsRoute() },
-  { label: 'Custom Orders', href: toHomeSection('custom-order-form') },
-  { label: 'Journal', href: toJournalRoute() },
-  { label: 'Contact', href: toHomeSection('contact') },
+  {
+    label: 'Shop',
+    href: toProductsRoute(),
+    columns: [
+      {
+        title: 'Jewellery Type',
+        links: studioCollectionLinks,
+      },
+      {
+        title: 'Signature Collections',
+        links: featuredCollectionLinks,
+      },
+      {
+        title: 'Browse the Studio',
+        links: [
+          {
+            label: 'All Products',
+            description: 'View the full studio assortment',
+            href: toProductsRoute(),
+          },
+          {
+            label: 'Featured Pieces',
+            description: 'Jump to the curated bestseller edit',
+            href: toHomeSection('bestsellers'),
+          },
+          {
+            label: 'Gift Moments',
+            description: 'Explore meaningful gifting ideas',
+            href: toHomeSection('gifts'),
+          },
+          {
+            label: 'Studio Journal',
+            description: 'Read styling notes and brand stories',
+            href: toJournalRoute(),
+          },
+        ],
+      },
+    ],
+    featureCards: [
+      {
+        title: featuredCollections[0].name,
+        description: featuredCollections[0].description,
+        ctaLabel: 'Shop collection',
+        href: featuredCollections[0].href,
+        image: featuredCollections[0].image,
+        imageAlt: featuredCollections[0].imageAlt,
+      },
+      {
+        title: featuredCollections[3].name,
+        description: featuredCollections[3].description,
+        ctaLabel: 'Explore editorial pieces',
+        href: featuredCollections[3].href,
+        image: featuredCollections[3].image,
+        imageAlt: featuredCollections[3].imageAlt,
+      },
+    ],
+  },
+  {
+    label: 'Collections',
+    href: toHomeSection('collections'),
+    columns: [
+      {
+        title: 'Featured Collections',
+        links: featuredCollectionLinks,
+      },
+      {
+        title: 'Studio Categories',
+        links: studioCollectionLinks,
+      },
+      {
+        title: 'Discover More',
+        links: [
+          {
+            label: 'Collection Spotlight',
+            description: 'Browse the main collection grid',
+            href: toHomeSection('collections'),
+          },
+          {
+            label: 'Custom Order Spotlight',
+            description: 'View the featured bespoke section',
+            href: toHomeSection('launch'),
+          },
+          {
+            label: 'Follow the Journey',
+            description: 'Jump to the studio social collage',
+            href: toHomeSection('social'),
+          },
+        ],
+      },
+    ],
+    featureCards: [
+      {
+        title: featuredCollections[1].name,
+        description: featuredCollections[1].description,
+        ctaLabel: 'See statement pieces',
+        href: featuredCollections[1].href,
+        image: featuredCollections[1].image,
+        imageAlt: featuredCollections[1].imageAlt,
+      },
+      {
+        title: featuredCollections[2].name,
+        description: featuredCollections[2].description,
+        ctaLabel: 'Browse bespoke pieces',
+        href: featuredCollections[2].href,
+        image: featuredCollections[2].image,
+        imageAlt: featuredCollections[2].imageAlt,
+      },
+    ],
+  },
+  {
+    label: 'About',
+    href: toHomeSection('mission'),
+    columns: [
+      {
+        title: 'About Selah Starr',
+        links: [
+          {
+            label: 'Our Story',
+            description: 'Meet the studio and its point of view',
+            href: toHomeSection('mission'),
+          },
+          {
+            label: 'Studio Journal',
+            description: 'Read the latest notes and features',
+            href: toJournalRoute(),
+          },
+          {
+            label: 'Follow Our Journey',
+            description: 'See the studio social collage',
+            href: toHomeSection('social'),
+          },
+        ],
+      },
+      {
+        title: 'Help & Support',
+        links: [
+          {
+            label: 'Contact',
+            description: 'Reach out directly to the studio',
+            href: toHomeSection('contact'),
+          },
+          {
+            label: 'FAQs',
+            description: 'Answers to shipping, care, and orders',
+            href: toHomeSection('faq'),
+          },
+          {
+            label: 'Custom Request Form',
+            description: 'Submit a bespoke order enquiry',
+            href: toHomeSection('custom-order-form'),
+          },
+        ],
+      },
+      {
+        title: 'Explore the Site',
+        links: [
+          {
+            label: 'All Products',
+            description: 'Browse the full studio assortment',
+            href: toProductsRoute(),
+          },
+          {
+            label: 'Gift Moments',
+            description: 'Discover gifting-focused pieces',
+            href: toHomeSection('gifts'),
+          },
+          {
+            label: 'Featured Pieces',
+            description: 'Jump to the hero product section',
+            href: toHomeSection('bestsellers'),
+          },
+        ],
+      },
+    ],
+    featureCards: [
+      {
+        title: 'Inside the studio',
+        description: 'See the custom-order process and the handmade details behind Selah Starr Studio.',
+        ctaLabel: 'Read the brand story',
+        href: toHomeSection('mission'),
+        image: customOrderPearlSet,
+        imageAlt: 'Selah Starr Studio custom pearl set in the studio',
+      },
+      {
+        title: 'Need help?',
+        description: 'Start with FAQs, then reach out for custom orders, sizing, or support.',
+        ctaLabel: 'Get support',
+        href: toHomeSection('faq'),
+        image: customOrderGoldChoker,
+        imageAlt: 'Selah Starr Studio handcrafted choker design for support and custom enquiries',
+      },
+    ],
+  },
 ]
 
 export const headerSocialLinks = socialLinks
 
 export const themeHeroContent = {
-  eyebrow: brand.name,
-  serifTitle: 'Wearable Art, Handmade',
-  sansTitle: 'With Soul & Sparkle',
-  description: brand.heroSupportingCopy,
-  primaryCta: 'Shop the Collection',
-  primaryHref: toProductsRoute(),
-  secondaryCta: 'Request a Custom Piece on WhatsApp',
-  secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
-  secondaryExternal: true,
+  title: 'WEAR YOUR STORY',
+  promotion: '10% Off All Products this Summer',
+  shopLabel: 'SHOP NOW',
+  shopHref: toProductsRoute(),
 }
 
 export const launchContent = {
