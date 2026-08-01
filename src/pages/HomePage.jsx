@@ -1,6 +1,6 @@
+import { CollectionSpotlight } from '../components/CollectionSpotlight'
 import { ThemeShowcaseHero } from '../components/ThemeShowcaseHero'
 import { LaunchHero } from '../components/LaunchHero'
-import { CollectionGrid } from '../components/CollectionGrid'
 import { GiftBanner } from '../components/GiftBanner'
 import { MembershipForm } from '../components/MembershipForm'
 import { ProductGrid } from '../components/ProductGrid'
@@ -37,21 +37,11 @@ export function HomePage() {
         socialLinks={headerSocialLinks}
       />
       <LaunchHero content={launchContent} />
-      <CollectionGrid
+      <CollectionSpotlight
         id={collectionSections.featured.id}
         eyebrow={collectionSections.featured.eyebrow}
         title={collectionSections.featured.title}
-        description={collectionSections.featured.description}
         items={collectionSections.featured.items}
-        tone={collectionSections.featured.tone}
-      />
-      <CollectionGrid
-        id={collectionSections.studio.id}
-        eyebrow={collectionSections.studio.eyebrow}
-        title={collectionSections.studio.title}
-        description={collectionSections.studio.description}
-        items={collectionSections.studio.items}
-        tone={collectionSections.studio.tone}
       />
       <GiftBanner content={giftBannerContent} />
       <MembershipForm content={membershipContent} />

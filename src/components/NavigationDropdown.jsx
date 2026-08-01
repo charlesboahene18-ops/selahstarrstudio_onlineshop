@@ -4,7 +4,8 @@ import { ChevronDown } from 'lucide-react'
 export function NavigationDropdown({ link, isOpen, onOpen, onClose }) {
   const triggerRef = useRef(null)
   const firstItemRef = useRef(null)
-  const hasItems = Array.isArray(link.items) && link.items.length > 0
+  const hasColumns = Array.isArray(link.columns) && link.columns.length > 0
+  const hasFeatureCards = Array.isArray(link.featureCards) && link.featureCards.length > 0
 
   const focusFirstItem = () => {
     firstItemRef.current?.focus()
@@ -13,11 +14,11 @@ export function NavigationDropdown({ link, isOpen, onOpen, onClose }) {
   return (
     <div
       className={`site-header__nav-item ${isOpen ? 'is-open' : ''}`}
-      onMouseEnter={hasItems ? onOpen : undefined}
-      onMouseLeave={hasItems ? onClose : undefined}
-      onFocusCapture={hasItems ? onOpen : undefined}
+      onMouseEnter={hasColumns ? onOpen : undefined}
+      onMouseLeave={hasColumns ? onClose : undefined}
+      onFocusCapture={hasColumns ? onOpen : undefined}
       onBlurCapture={
-        hasItems
+        hasColumns
           ? (event) => {
               if (!event.currentTarget.contains(event.relatedTarget)) {
                 onClose()
@@ -30,10 +31,10 @@ export function NavigationDropdown({ link, isOpen, onOpen, onClose }) {
         ref={triggerRef}
         className="site-header__nav-link"
         href={link.href}
-        aria-haspopup={hasItems ? 'true' : undefined}
-        aria-expanded={hasItems ? isOpen : undefined}
+        aria-haspopup={hasColumns ? 'true' : undefined}
+        aria-expanded={hasColumns ? isOpen : undefined}
         onKeyDown={(event) => {
-          if (!hasItems) {
+          if (!hasColumns) {
             return
           }
 
@@ -51,12 +52,12 @@ export function NavigationDropdown({ link, isOpen, onOpen, onClose }) {
         }}
       >
         <span>{link.label}</span>
-        {hasItems ? <ChevronDown size={14} aria-hidden="true" /> : null}
+        {hasColumns ? <ChevronDown size={14} aria-hidden="true" /> : null}
       </a>
 
-      {hasItems ? (
+      {hasColumns && isOpen ? (
         <div
-          className="site-header__dropdown"
+          className={`site-header__dropdown ${hasFeatureCards ? 'site-header__dropdown--mega' : ''}`}
           aria-label={`${link.label} submenu`}
           onKeyDown={(event) => {
             if (event.key !== 'Escape') {
@@ -68,17 +69,41 @@ export function NavigationDropdown({ link, isOpen, onOpen, onClose }) {
             triggerRef.current?.focus()
           }}
         >
-          {link.items.map((item, index) => (
-            <a
-              key={item.href}
-              ref={index === 0 ? firstItemRef : undefined}
-              className="site-header__dropdown-link"
-              href={item.href}
-            >
-              <strong>{item.label}</strong>
-              {item.description ? <span>{item.description}</span> : null}
-            </a>
-          ))}
+          <div className="site-header__dropdown-columns">
+            {link.columns.map((column, columnIndex) => (
+              <section key={`${link.label}-${column.title}`} className="site-header__dropdown-group">
+                <header>{column.title}</header>
+                <div className="site-header__dropdown-list">
+                  {column.links.map((item, itemIndex) => (
+                    <a
+                      key={item.href}
+                      ref={columnIndex === 0 && itemIndex === 0 ? firstItemRef : undefined}
+                      className="site-header__dropdown-link"
+                      href={item.href}
+                    >
+                      <strong>{item.label}</strong>
+                      {item.description ? <span>{item.description}</span> : null}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          {hasFeatureCards ? (
+            <div className="site-header__dropdown-featureCards">
+              {link.featureCards.map((card) => (
+                <a key={card.href} href={card.href} className="site-header__dropdown-card">
+                  <img src={card.image} alt={card.imageAlt} loading="lazy" />
+                  <div className="site-header__dropdown-card-copy">
+                    <strong>{card.title}</strong>
+                    <p>{card.description}</p>
+                    <span>{card.ctaLabel}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : null}
     </div>

@@ -26,6 +26,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   const firstFocusableRef = useRef(null)
   const mobileMenuPanelRef = useRef(null)
   const searchInputRef = useRef(null)
+  const searchPanelRef = useRef(null)
   const wasMenuOpenRef = useRef(false)
 
   const anyOverlayOpen = menuOpen || searchOpen
@@ -127,6 +128,46 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
 
     searchInputRef.current?.focus()
     return undefined
+  }, [searchOpen])
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return undefined
+    }
+
+    const panel = searchPanelRef.current
+    if (!panel) {
+      return undefined
+    }
+
+    const selector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+
+    const onKeyDown = (event) => {
+      if (event.key !== 'Tab') {
+        return
+      }
+
+      const focusableElements = [...panel.querySelectorAll(selector)]
+
+      if (!focusableElements.length) {
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+
+    panel.addEventListener('keydown', onKeyDown)
+    return () => panel.removeEventListener('keydown', onKeyDown)
   }, [searchOpen])
 
   useEffect(() => {
@@ -292,20 +333,28 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
         </div>
       </header>
 
-      <MobileMenu
-        open={menuOpen}
-        navLinks={navLinks}
-        socialLinks={socialLinks}
-        onClose={closeOverlays}
-        firstFocusableRef={firstFocusableRef}
-        panelRef={mobileMenuPanelRef}
-      />
+      {menuOpen ? (
+        <MobileMenu
+          open={menuOpen}
+          navLinks={navLinks}
+          socialLinks={socialLinks}
+          onClose={closeOverlays}
+          firstFocusableRef={firstFocusableRef}
+          panelRef={mobileMenuPanelRef}
+        />
+      ) : null}
 
-        <div className={`utility-overlay ${searchOpen ? 'is-visible' : ''}`} aria-hidden={!searchOpen}>
-        <div className="utility-overlay__backdrop" onClick={() => closeSearch()} />
+      {searchOpen ? (
+        <div className="utility-overlay is-visible" aria-hidden={!searchOpen}>
+          <div className="utility-overlay__backdrop" onClick={() => closeSearch()} />
 
-        {searchOpen ? (
-          <section className="utility-panel utility-panel--search" role="dialog" aria-modal="true" aria-label="Search products">
+          <section
+            ref={searchPanelRef}
+            className="utility-panel utility-panel--search"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Search products"
+          >
             <div className="utility-panel__header">
               <h2>Search the collection</h2>
               <button type="button" onClick={() => closeSearch({ restoreFocus: true })} aria-label="Close search">
@@ -339,8 +388,8 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
               )}
             </div>
           </section>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </>
   )
 }

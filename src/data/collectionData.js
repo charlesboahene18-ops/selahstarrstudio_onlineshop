@@ -1,9 +1,11 @@
 import braceletStack from '../assets/products/bracelet-stack.svg'
-import goldEarrings from '../assets/collections/gold-earrings.svg'
+import beadedBralette from '../assets/beaded-bralette.png'
+import beadedJewelleryPearlSiren from '../assets/beaded-jewellery-pearl-siren.jpg'
+import customPiece from '../assets/custom-piece.png'
 import goldPendant from '../assets/products/gold-pendant.svg'
-import heroPortrait from '../assets/hero/hero-portrait.svg'
 import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverStuds from '../assets/collections/silver-studs.svg'
+import wearableArtBracelets from '../assets/wearable-art-bracelets.jpg'
 import { toCollectionRoute } from '../utils/routes'
 
 export const featuredCollections = [
@@ -17,9 +19,10 @@ export const featuredCollections = [
     longDescription:
       'This collection brings together Selah Starr Studio pieces designed for expressive everyday styling and occasion dressing. Each item shown here remains flexible for final client-approved assortment details.',
     productCategories: ['Beaded Jewellery', 'Beaded Necklaces'],
-    image: goldEarrings,
-    imageAlt:
-      'Temporary mock image representing handmade beaded jewellery by Selah Starr Studio',
+    spotlightDescription: 'Handcrafted details',
+    image: beadedJewelleryPearlSiren,
+    imageAlt: 'Selah Starr Studio Pearl Siren jewellery set',
+    imageObjectPosition: 'center 38%',
     href: toCollectionRoute('beaded-jewellery'),
   },
   {
@@ -32,9 +35,10 @@ export const featuredCollections = [
     longDescription:
       'These mock concepts highlight a more dramatic side of the studio catalogue, with silhouettes built for custom sizing, bold colour stories, and styling-led commissions.',
     productCategories: ['Beaded Bralettes'],
-    image: heroPortrait,
-    imageAlt:
-      'Temporary mock image representing a beaded bralette category by Selah Starr Studio',
+    spotlightDescription: 'Statement fit',
+    image: beadedBralette,
+    imageAlt: 'Selah Starr Studio handcrafted beaded bralette',
+    imageObjectPosition: 'center 28%',
     href: toCollectionRoute('beaded-bralettes'),
   },
   {
@@ -47,9 +51,10 @@ export const featuredCollections = [
     longDescription:
       'These entries represent the part of the studio experience that begins with a conversation. Shapes, colours, and measurements can all be adjusted before the final piece is confirmed.',
     productCategories: ['Custom Pieces'],
-    image: goldPendant,
-    imageAlt:
-      'Temporary mock image representing custom jewellery pieces by Selah Starr Studio',
+    spotlightDescription: 'Made for you',
+    image: customPiece,
+    imageAlt: 'Selah Starr Studio custom jewellery piece on red fabric',
+    imageObjectPosition: 'center 42%',
     href: toCollectionRoute('custom-pieces'),
   },
   {
@@ -62,9 +67,10 @@ export const featuredCollections = [
     longDescription:
       'This collection frames Selah Starr Studio as a wearable-art practice, combining beadwork with fashion-led silhouettes and commission-based storytelling.',
     productCategories: ['Wearable Art'],
-    image: braceletStack,
-    imageAlt:
-      'Temporary mock image representing wearable art by Selah Starr Studio',
+    spotlightDescription: 'Studio forms',
+    image: wearableArtBracelets,
+    imageAlt: 'Selah Starr Studio natural stone bracelet design',
+    imageObjectPosition: 'center 36%',
     href: toCollectionRoute('wearable-art'),
   },
 ]

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Minus, Plus, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { BrandMark } from './BrandMark'
 import { Button } from './Button'
 import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
@@ -7,20 +7,14 @@ import { SocialLinks } from './SocialLinks'
 import { toCartRoute } from '../utils/routes'
 
 export function MobileMenu({ open, navLinks, socialLinks, onClose, firstFocusableRef, panelRef }) {
-  const [openSections, setOpenSections] = useState({})
+  const [activePanelLabel, setActivePanelLabel] = useState(null)
+  const activePanel = navLinks.find((link) => link.label === activePanelLabel) ?? null
 
   useEffect(() => {
     if (!open) {
-      setOpenSections({})
+      setActivePanelLabel(null)
     }
   }, [open])
-
-  const toggleSection = (label) => {
-    setOpenSections((current) => ({
-      ...current,
-      [label]: !current[label],
-    }))
-  }
 
   return (
     <div className={`mobile-menu ${open ? 'is-open' : ''}`} aria-hidden={!open}>
@@ -47,71 +41,103 @@ export function MobileMenu({ open, navLinks, socialLinks, onClose, firstFocusabl
           </button>
         </div>
 
-        <div className="mobile-menu__links">
-          {navLinks.map((link) => {
-            const hasItems = Array.isArray(link.items) && link.items.length > 0
-            const isExpanded = Boolean(openSections[link.label])
-            const sectionId = `mobile-group-${link.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+        <div className="mobile-menu__viewport">
+          <div className={`mobile-menu__views ${activePanel ? 'is-secondary-active' : ''}`}>
+            <div
+              className="mobile-menu__view mobile-menu__view--primary"
+              aria-hidden={Boolean(activePanel)}
+              inert={activePanel ? '' : undefined}
+            >
+              <div className="mobile-menu__links">
+                {navLinks.map((link) => {
+                  const hasColumns = Array.isArray(link.columns) && link.columns.length > 0
 
-            if (!hasItems) {
-              return (
-                <a key={link.href} href={link.href} onClick={onClose}>
-                  {link.label}
-                </a>
-              )
-            }
+                  if (!hasColumns) {
+                    return (
+                      <a key={link.href} href={link.href} onClick={onClose}>
+                        {link.label}
+                      </a>
+                    )
+                  }
 
-            return (
-              <div key={link.label} className="mobile-menu__group">
-                <div className="mobile-menu__group-header">
-                  <a href={link.href} onClick={onClose}>
-                    {link.label}
-                  </a>
+                  return (
+                    <button
+                      key={link.label}
+                      type="button"
+                      className="mobile-menu__primary-link"
+                      onClick={() => setActivePanelLabel(link.label)}
+                      aria-label={`Open ${link.label} menu`}
+                    >
+                      <span>{link.label}</span>
+                      <ChevronRight size={18} aria-hidden="true" />
+                    </button>
+                  )
+                })}
+              </div>
+
+              <a href={toCartRoute()} onClick={onClose}>
+                Saved cart
+              </a>
+              <SocialLinks
+                links={socialLinks}
+                className="mobile-menu__social"
+                ariaLabel="Mobile social links"
+              />
+              <Button
+                as="a"
+                href={buildWhatsAppUrl(whatsappMessages.customOrder)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button--small button--stacked button--whatsapp"
+                onClick={onClose}
+              >
+                Start a custom order on WhatsApp
+              </Button>
+            </div>
+
+            <div
+              className="mobile-menu__view mobile-menu__view--secondary"
+              aria-hidden={!activePanel}
+              inert={activePanel ? undefined : ''}
+            >
+              {activePanel ? (
+                <>
                   <button
                     type="button"
-                    className="mobile-menu__toggle"
-                    onClick={() => toggleSection(link.label)}
-                    aria-expanded={isExpanded}
-                    aria-controls={sectionId}
-                    aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${link.label}`}
+                    className="mobile-menu__back"
+                    onClick={() => setActivePanelLabel(null)}
                   >
-                    {isExpanded ? <Minus size={16} /> : <Plus size={16} />}
+                    <ChevronLeft size={18} aria-hidden="true" />
+                    <span>Back</span>
                   </button>
-                </div>
 
-                {isExpanded ? (
-                  <div id={sectionId} className="mobile-menu__submenu is-open">
-                    {link.items.map((item) => (
-                      <a key={item.href} href={item.href} onClick={onClose}>
-                        <strong>{item.label}</strong>
-                        {item.description ? <span>{item.description}</span> : null}
-                      </a>
+                  <div className="mobile-menu__secondary-header">
+                    <span>{activePanel.label}</span>
+                    <a href={activePanel.href} onClick={onClose}>
+                      View all
+                    </a>
+                  </div>
+
+                  <div className="mobile-menu__secondary-groups">
+                    {activePanel.columns.map((column) => (
+                      <section key={`${activePanel.label}-${column.title}`} className="mobile-menu__secondary-group">
+                        <header>{column.title}</header>
+                        <div className="mobile-menu__secondary-links">
+                          {column.links.map((item) => (
+                            <a key={item.href} href={item.href} onClick={onClose}>
+                              <strong>{item.label}</strong>
+                              {item.description ? <span>{item.description}</span> : null}
+                            </a>
+                          ))}
+                        </div>
+                      </section>
                     ))}
                   </div>
-                ) : null}
-              </div>
-            )
-          })}
+                </>
+              ) : null}
+            </div>
+          </div>
         </div>
-
-        <a href={toCartRoute()} onClick={onClose}>
-          Saved cart
-        </a>
-        <SocialLinks
-          links={socialLinks}
-          className="mobile-menu__social"
-          ariaLabel="Mobile social links"
-        />
-        <Button
-          as="a"
-          href={buildWhatsAppUrl(whatsappMessages.customOrder)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button--small button--stacked button--whatsapp"
-          onClick={onClose}
-        >
-          Start a custom order on WhatsApp
-        </Button>
       </nav>
     </div>
   )
