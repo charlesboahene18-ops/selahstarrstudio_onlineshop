@@ -1,19 +1,34 @@
+import { Header } from './Header'
 import { Button } from './Button'
-import { HomeCarousel } from './HomeCarousel'
-import selahStarrWatermark from '../assets/Image Jul 21, 2026 at 07_59_05 PM.png'
+import heroImage from '../assets/Image Aug 1, 2026 at 01_39_24 PM.png'
 
-export function ThemeShowcaseHero({ content, slides }) {
+export function ThemeShowcaseHero({ content, navLinks, products, socialLinks }) {
   return (
-    <section
-      className="home-hero"
-      id="home"
-      style={{
-        backgroundImage: `linear-gradient(rgba(250, 247, 241, 0.91), rgba(250, 247, 241, 0.91)), url("${selahStarrWatermark}")`,
-      }}
-    >
-      <div className="home-hero__inner">
-        <div className="home-hero__content">
-          <p className="theme-showcase-hero__eyebrow">{content.eyebrow}</p>
+    <section className="home-hero" id="home">
+      <img
+        src={heroImage}
+        alt="Selah Starr Studio handcrafted jewellery collection"
+        className="home-hero__image"
+        loading="eager"
+        fetchPriority="high"
+      />
+      <div className="home-hero__top-gradient" aria-hidden="true" />
+
+      <Header
+        overlay
+        navLinks={navLinks}
+        products={products}
+        socialLinks={socialLinks}
+      />
+
+      <div className="home-hero__content">
+        <div className="home-hero__content-inner">
+          <div className="home-hero__eyebrow-stack" aria-label={content.eyebrow}>
+            {content.introLines.map((line, index) => (
+              <span key={`${line}-${index}`}>{line}</span>
+            ))}
+          </div>
+
           <h1>
             <span className="theme-showcase-hero__serif">{content.serifTitle}</span>
             <span className="theme-showcase-hero__sans">{content.sansTitle}</span>
@@ -33,13 +48,6 @@ export function ThemeShowcaseHero({ content, slides }) {
               {content.secondaryCta}
             </Button>
           </div>
-        </div>
-
-        <div className="home-hero__carousel">
-          <HomeCarousel
-            slides={slides}
-            ariaLabel="Selah Starr Studio featured designs"
-          />
         </div>
       </div>
     </section>

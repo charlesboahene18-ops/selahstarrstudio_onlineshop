@@ -21,7 +21,6 @@ import {
   toCollectionRoute,
   toHomeSection,
   toJournalPostRoute,
-  toJournalRoute,
   toProductsRoute,
 } from '../utils/routes'
 
@@ -49,17 +48,32 @@ export const socialLinks = [
 ]
 
 export const navLinks = [
-  { label: 'Home', href: toHomeSection('home') },
-  { label: 'Collections', href: toProductsRoute() },
-  { label: 'Custom Orders', href: toHomeSection('custom-order-form') },
-  { label: 'Journal', href: toJournalRoute() },
-  { label: 'Contact', href: toHomeSection('contact') },
+  {
+    label: 'Shop',
+    href: toProductsRoute(),
+    items: featuredCollections.map((collection) => ({
+      label: collection.name,
+      description: collection.label,
+      href: collection.href,
+    })),
+  },
+  {
+    label: 'Collections',
+    href: toHomeSection('collections'),
+    items: studioCollections.map((collection) => ({
+      label: collection.name,
+      description: collection.label,
+      href: collection.href,
+    })),
+  },
+  { label: 'About', href: toHomeSection('mission') },
 ]
 
 export const headerSocialLinks = socialLinks
 
 export const themeHeroContent = {
   eyebrow: brand.name,
+  introLines: [brand.name.toUpperCase(), brand.wordmarkTagline, brand.name.toUpperCase()],
   serifTitle: 'Wearable Art, Handmade',
   sansTitle: 'With Soul & Sparkle',
   description: brand.heroSupportingCopy,

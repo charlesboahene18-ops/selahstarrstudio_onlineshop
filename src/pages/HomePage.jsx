@@ -15,20 +15,27 @@ import {
   faqItems,
   faqSection,
   giftBannerContent,
+  headerSocialLinks,
   launchContent,
   membershipContent,
   missionContent,
+  navLinks,
   featuredProducts,
   productSection,
   socialContent,
   themeHeroContent,
+  allProducts,
 } from '../data/storefrontContent'
-import { homeCarouselSlides } from '../data/homeCarouselSlides'
 
 export function HomePage() {
   return (
     <>
-      <ThemeShowcaseHero content={themeHeroContent} slides={homeCarouselSlides} />
+      <ThemeShowcaseHero
+        content={themeHeroContent}
+        navLinks={navLinks}
+        products={allProducts}
+        socialLinks={headerSocialLinks}
+      />
       <LaunchHero content={launchContent} />
       <CollectionGrid
         id={collectionSections.featured.id}
