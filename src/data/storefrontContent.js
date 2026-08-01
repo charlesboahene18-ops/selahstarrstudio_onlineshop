@@ -72,16 +72,10 @@ export const navLinks = [
 export const headerSocialLinks = socialLinks
 
 export const themeHeroContent = {
-  eyebrow: brand.name,
-  introLines: [brand.name.toUpperCase(), brand.wordmarkTagline, brand.name.toUpperCase()],
-  serifTitle: 'Wearable Art, Handmade',
-  sansTitle: 'With Soul & Sparkle',
-  description: brand.heroSupportingCopy,
-  primaryCta: 'Shop the Collection',
-  primaryHref: toProductsRoute(),
-  secondaryCta: 'Request a Custom Piece on WhatsApp',
-  secondaryHref: buildWhatsAppUrl(whatsappMessages.customPiece),
-  secondaryExternal: true,
+  title: 'WEAR YOUR STORY',
+  promotion: '10% Off All Products this Summer',
+  shopLabel: 'SHOP NOW',
+  shopHref: toProductsRoute(),
 }
 
 export const launchContent = {
