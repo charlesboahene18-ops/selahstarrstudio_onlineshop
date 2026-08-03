@@ -1,144 +1,115 @@
-import { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { BrandMark } from './BrandMark'
-import { Button } from './Button'
-import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
-import { SocialLinks } from './SocialLinks'
-import { toCartRoute } from '../utils/routes'
+import { MobileMenuSection } from './MobileMenuSection'
 
-export function MobileMenu({ open, navLinks, socialLinks, onClose, firstFocusableRef, panelRef }) {
-  const [activePanelLabel, setActivePanelLabel] = useState(null)
-  const activePanel = navLinks.find((link) => link.label === activePanelLabel) ?? null
+function MobileMenuGroup({ title, links, onNavigate }) {
+  return (
+    <section className="mobile-menu-group">
+      <h3 className="mobile-menu-group__title">{title}</h3>
+      <div>
+        {links.map((item) => (
+          <a key={item.href} href={item.href} className="mobile-menu-link" onClick={onNavigate}>
+            {item.label}
+            {item.description ? (
+              <span className="mobile-menu-link__description">{item.description}</span>
+            ) : null}
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-  useEffect(() => {
-    if (!open) {
-      setActivePanelLabel(null)
-    }
-  }, [open])
+function MobileMenuContent({ menu, onNavigate, showViewAll = false }) {
+  if (!menu) {
+    return null
+  }
 
   return (
-    <div className={`mobile-menu ${open ? 'is-open' : ''}`} aria-hidden={!open}>
-      <nav
+    <>
+      {showViewAll ? (
+        <a href={menu.href} className="mobile-menu-link mobile-menu-link--all" onClick={onNavigate}>
+          View all {menu.label}
+        </a>
+      ) : null}
+
+      {menu.columns.map((column) => (
+        <MobileMenuGroup
+          key={`${menu.label}-${column.title}`}
+          title={column.title}
+          links={column.links}
+          onNavigate={onNavigate}
+        />
+      ))}
+    </>
+  )
+}
+
+export function MobileMenu({
+  open,
+  navLinks,
+  onClose,
+  onSectionToggle,
+  activeSection,
+  firstFocusableRef,
+  panelRef,
+  topOffset,
+}) {
+  const shopMenu = navLinks.find((link) => link.label === 'Shop') ?? null
+  const collectionsMenu = navLinks.find((link) => link.label === 'Collections') ?? null
+  const aboutMenu = navLinks.find((link) => link.label === 'About') ?? null
+
+  return (
+    <div
+      className={`mobile-menu ${open ? 'is-open' : ''}`}
+      aria-hidden={!open}
+      style={{ '--mobile-menu-offset': `${topOffset}px` }}
+    >
+      <div className="mobile-menu__overlay" onClick={onClose} aria-hidden="true" />
+
+      <div
         ref={panelRef}
         className="mobile-menu__panel"
-        id="mobile-menu"
-        aria-label="Mobile"
+        aria-label="Navigation menu"
         aria-modal="true"
+        aria-hidden={!open}
+        inert={!open ? true : undefined}
         role="dialog"
       >
-        <div className="mobile-menu__header">
-          <a href="#home" aria-label="Selah Starr Studio home" onClick={onClose}>
-            <BrandMark compact />
-          </a>
-          <button
-            ref={firstFocusableRef}
-            type="button"
-            className="mobile-menu__close"
-            onClick={onClose}
-            aria-label="Close navigation menu"
-          >
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="mobile-menu__viewport">
-          <div className={`mobile-menu__views ${activePanel ? 'is-secondary-active' : ''}`}>
-            <div
-              className="mobile-menu__view mobile-menu__view--primary"
-              aria-hidden={Boolean(activePanel)}
-              inert={activePanel ? '' : undefined}
+        <nav
+          id="mobile-navigation"
+          className={`mobile-navigation ${open ? 'mobile-navigation--open' : ''}`}
+          aria-label="Mobile navigation"
+        >
+          <div className="mobile-menu__links">
+            <MobileMenuSection
+              id="mobile-shop-menu"
+              label="SHOP"
+              isOpen={activeSection === 'shop'}
+              onToggle={() => onSectionToggle('shop')}
+              buttonRef={firstFocusableRef}
             >
-              <div className="mobile-menu__links">
-                {navLinks.map((link) => {
-                  const hasColumns = Array.isArray(link.columns) && link.columns.length > 0
+              <MobileMenuContent menu={shopMenu} onNavigate={onClose} showViewAll />
+            </MobileMenuSection>
 
-                  if (!hasColumns) {
-                    return (
-                      <a key={link.href} href={link.href} onClick={onClose}>
-                        {link.label}
-                      </a>
-                    )
-                  }
-
-                  return (
-                    <button
-                      key={link.label}
-                      type="button"
-                      className="mobile-menu__primary-link"
-                      onClick={() => setActivePanelLabel(link.label)}
-                      aria-label={`Open ${link.label} menu`}
-                    >
-                      <span>{link.label}</span>
-                      <ChevronRight size={18} aria-hidden="true" />
-                    </button>
-                  )
-                })}
-              </div>
-
-              <a href={toCartRoute()} onClick={onClose}>
-                Saved cart
-              </a>
-              <SocialLinks
-                links={socialLinks}
-                className="mobile-menu__social"
-                ariaLabel="Mobile social links"
-              />
-              <Button
-                as="a"
-                href={buildWhatsAppUrl(whatsappMessages.customOrder)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button--small button--stacked button--whatsapp"
-                onClick={onClose}
-              >
-                Start a custom order on WhatsApp
-              </Button>
-            </div>
-
-            <div
-              className="mobile-menu__view mobile-menu__view--secondary"
-              aria-hidden={!activePanel}
-              inert={activePanel ? undefined : ''}
+            <MobileMenuSection
+              id="mobile-collections-menu"
+              label="COLLECTIONS"
+              isOpen={activeSection === 'collections'}
+              onToggle={() => onSectionToggle('collections')}
             >
-              {activePanel ? (
-                <>
-                  <button
-                    type="button"
-                    className="mobile-menu__back"
-                    onClick={() => setActivePanelLabel(null)}
-                  >
-                    <ChevronLeft size={18} aria-hidden="true" />
-                    <span>Back</span>
-                  </button>
+              <MobileMenuContent menu={collectionsMenu} onNavigate={onClose} />
+            </MobileMenuSection>
 
-                  <div className="mobile-menu__secondary-header">
-                    <span>{activePanel.label}</span>
-                    <a href={activePanel.href} onClick={onClose}>
-                      View all
-                    </a>
-                  </div>
-
-                  <div className="mobile-menu__secondary-groups">
-                    {activePanel.columns.map((column) => (
-                      <section key={`${activePanel.label}-${column.title}`} className="mobile-menu__secondary-group">
-                        <header>{column.title}</header>
-                        <div className="mobile-menu__secondary-links">
-                          {column.links.map((item) => (
-                            <a key={item.href} href={item.href} onClick={onClose}>
-                              <strong>{item.label}</strong>
-                              {item.description ? <span>{item.description}</span> : null}
-                            </a>
-                          ))}
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </>
-              ) : null}
-            </div>
+            <MobileMenuSection
+              id="mobile-about-menu"
+              label="ABOUT"
+              isOpen={activeSection === 'about'}
+              onToggle={() => onSectionToggle('about')}
+            >
+              <MobileMenuContent menu={aboutMenu} onNavigate={onClose} />
+            </MobileMenuSection>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
   )
 }

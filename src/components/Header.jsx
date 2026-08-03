@@ -13,13 +13,18 @@ import { brand } from '../config/brand'
 import { useCart } from '../hooks/useCart'
 import { toCartRoute, toHomeSection } from '../utils/routes'
 
-export function Header({ navLinks, products, socialLinks, overlay = false }) {
+/** @typedef {'shop' | 'collections' | 'about'} MobileSection */
+
+export function Header({ navLinks, products, overlay = false }) {
   const { itemCount } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [activeMenuLabel, setActiveMenuLabel] = useState(null)
+  /** @type {[MobileSection | null, import('react').Dispatch<import('react').SetStateAction<MobileSection | null>>]} */
+  const [activeMobileSection, setActiveMobileSection] = useState(null)
   const [query, setQuery] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
+  const [mobileMenuOffset, setMobileMenuOffset] = useState(0)
   const [shouldFocusFirstMenuItem, setShouldFocusFirstMenuItem] = useState(false)
   const menuButtonRef = useRef(null)
   const desktopSearchButtonRef = useRef(null)
@@ -28,13 +33,11 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   const firstFocusableRef = useRef(null)
   const mobileMenuPanelRef = useRef(null)
   const searchInputRef = useRef(null)
-  const wasMenuOpenRef = useRef(false)
   const desktopHeaderRef = useRef(null)
   const desktopFirstMenuLinkRef = useRef(null)
   const activeMenuTriggerRef = useRef(null)
   const closeTimerRef = useRef(null)
 
-  const anyOverlayOpen = menuOpen
   const activeMenu = navLinks.find((link) => link.label === activeMenuLabel) ?? null
 
   const clearCloseTimer = () => {
@@ -82,9 +85,27 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   }
 
   const closeOverlays = () => {
-    setMenuOpen(false)
+    closeMobileMenu()
     setSearchOpen(false)
     closeDesktopMenu()
+  }
+
+  const closeMobileMenu = ({ restoreFocus = false } = {}) => {
+    setMenuOpen(false)
+    setActiveMobileSection(null)
+
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => {
+        menuButtonRef.current?.focus()
+      })
+    }
+  }
+
+  /** @param {MobileSection} section */
+  const toggleMobileSection = (section) => {
+    setActiveMobileSection((currentSection) =>
+      currentSection === section ? null : section,
+    )
   }
 
   const closeSearch = ({ restoreFocus = false } = {}) => {
@@ -99,7 +120,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
 
   const openSearch = (triggerRef) => {
     lastSearchTriggerRef.current = triggerRef
-    setMenuOpen(false)
+    closeMobileMenu()
     closeDesktopMenu()
     setSearchOpen(true)
   }
@@ -123,29 +144,24 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   }, [overlay])
 
   useEffect(() => {
-    if (!anyOverlayOpen) {
-      document.body.style.overflow = ''
+    if (!menuOpen) {
       return undefined
     }
 
+    const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousOverflow
     }
-  }, [anyOverlayOpen])
+  }, [menuOpen])
 
   useEffect(() => {
-    if (menuOpen) {
-      wasMenuOpenRef.current = true
-      firstFocusableRef.current?.focus()
+    if (!menuOpen) {
       return undefined
     }
 
-    if (wasMenuOpenRef.current) {
-      menuButtonRef.current?.focus()
-      wasMenuOpenRef.current = false
-    }
-
+    firstFocusableRef.current?.focus()
     return undefined
   }, [menuOpen])
 
@@ -167,7 +183,9 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
         return
       }
 
-      const focusableElements = [...panel.querySelectorAll(selector)]
+      const focusableElements = [...panel.querySelectorAll(selector)].filter(
+        (element) => !element.closest('[inert]'),
+      )
 
       if (!focusableElements.length) {
         return
@@ -188,6 +206,35 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
     panel.addEventListener('keydown', onKeyDown)
     return () => panel.removeEventListener('keydown', onKeyDown)
   }, [menuOpen])
+
+  useEffect(() => {
+    const header = desktopHeaderRef.current
+    if (!header) {
+      return undefined
+    }
+
+    const updateMobileMenuOffset = () => {
+      setMobileMenuOffset(header.getBoundingClientRect().bottom)
+    }
+
+    updateMobileMenuOffset()
+    window.addEventListener('resize', updateMobileMenuOffset)
+
+    if (typeof ResizeObserver === 'undefined') {
+      return () => window.removeEventListener('resize', updateMobileMenuOffset)
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateMobileMenuOffset()
+    })
+
+    resizeObserver.observe(header)
+
+    return () => {
+      window.removeEventListener('resize', updateMobileMenuOffset)
+      resizeObserver.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     if (!searchOpen) {
@@ -254,8 +301,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
       if (searchOpen) {
         closeSearch({ restoreFocus: true })
       } else if (menuOpen) {
-        setMenuOpen(false)
-        menuButtonRef.current?.focus()
+        closeMobileMenu({ restoreFocus: true })
       } else if (activeMenuLabel) {
         clearCloseTimer()
         setActiveMenuLabel(null)
@@ -271,8 +317,26 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
   }, [activeMenuLabel, menuOpen, searchOpen])
 
   useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth <= 1024) {
+        clearCloseTimer()
+        setActiveMenuLabel(null)
+        setShouldFocusFirstMenuItem(false)
+        return
+      }
+
+      setMenuOpen(false)
+      setActiveMobileSection(null)
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
     const onHashChange = () => {
       setMenuOpen(false)
+      setActiveMobileSection(null)
       setSearchOpen(false)
       clearCloseTimer()
       setActiveMenuLabel(null)
@@ -321,6 +385,7 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
           overlay ? 'site-header--overlay' : 'site-header--standard',
           isScrolled ? 'is-scrolled' : '',
           activeMenuLabel ? 'site-header--menu-open' : '',
+          menuOpen ? 'site-header--mobile-menu-open' : '',
           searchOpen ? 'site-header--search-open' : '',
         ].join(' ').trim()}
         onMouseEnter={activeMenuLabel ? cancelDesktopMenuClose : undefined}
@@ -477,62 +542,69 @@ export function Header({ navLinks, products, socialLinks, overlay = false }) {
         ) : null}
 
         <div className="site-header__mobile">
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className="site-header__icon-button site-header__menu-button"
-            onClick={() => {
-              setSearchOpen(false)
-              closeDesktopMenu()
-              setMenuOpen((current) => !current)
-            }}
-            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-controls="mobile-menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X size={20} strokeWidth={1.4} /> : <Menu size={20} strokeWidth={1.4} />}
-          </button>
-
-          <a className="site-header__mobile-brand" href="#home" aria-label={`${brand.name} home`}>
-            {brandLabel}
-          </a>
-
-          <div className="site-header__mobile-actions">
+          <div className="site-header__mobile-inner">
             <button
-              ref={mobileSearchButtonRef}
+              ref={menuButtonRef}
               type="button"
-              className="site-header__icon-button"
-              aria-label={searchOpen ? 'Close search' : 'Open search'}
-              aria-expanded={searchOpen}
-              aria-controls="header-search-panel"
-              onClick={() => toggleSearch(mobileSearchButtonRef.current)}
+              className="site-header__icon-button site-header__menu-button"
+              onClick={() => {
+                if (menuOpen) {
+                  closeMobileMenu()
+                  return
+                }
+
+                setSearchOpen(false)
+                closeDesktopMenu()
+                setMenuOpen(true)
+              }}
+              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-controls="mobile-navigation"
+              aria-expanded={menuOpen}
             >
-              <Search size={19} strokeWidth={1.35} />
+              {menuOpen ? <X size={20} strokeWidth={1.4} /> : <Menu size={20} strokeWidth={1.4} />}
             </button>
 
-            <a
-              className="site-header__action-link site-header__action-link--cart"
-              href={toCartRoute()}
-              aria-label={cartLabel}
-              title="Shopping bag"
-            >
-              <ShoppingBag size={19} strokeWidth={1.35} />
-              {itemCount > 0 ? <span className="site-header__cart-count">{itemCount}</span> : null}
+            <a className="site-header__mobile-brand" href="#home" aria-label={`${brand.name} home`}>
+              {brandLabel}
             </a>
+
+            <div className="site-header__mobile-actions">
+              <button
+                ref={mobileSearchButtonRef}
+                type="button"
+                className="site-header__icon-button"
+                aria-label={searchOpen ? 'Close search' : 'Open search'}
+                aria-expanded={searchOpen}
+                aria-controls="header-search-panel"
+                onClick={() => toggleSearch(mobileSearchButtonRef.current)}
+              >
+                <Search size={19} strokeWidth={1.35} />
+              </button>
+
+              <a
+                className="site-header__action-link site-header__action-link--cart"
+                href={toCartRoute()}
+                aria-label={cartLabel}
+                title="Shopping bag"
+              >
+                <ShoppingBag size={19} strokeWidth={1.35} />
+                {itemCount > 0 ? <span className="site-header__cart-count">{itemCount}</span> : null}
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
-      {menuOpen ? (
-        <MobileMenu
-          open={menuOpen}
-          navLinks={navLinks}
-          socialLinks={socialLinks}
-          onClose={closeOverlays}
-          firstFocusableRef={firstFocusableRef}
-          panelRef={mobileMenuPanelRef}
-        />
-      ) : null}
+      <MobileMenu
+        open={menuOpen}
+        navLinks={navLinks}
+        onClose={closeOverlays}
+        onSectionToggle={toggleMobileSection}
+        activeSection={activeMobileSection}
+        firstFocusableRef={firstFocusableRef}
+        panelRef={mobileMenuPanelRef}
+        topOffset={mobileMenuOffset}
+      />
 
     </>
   )
