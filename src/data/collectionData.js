@@ -1,11 +1,11 @@
 import braceletStack from '../assets/products/bracelet-stack.svg'
-import beadedBralette from '../assets/beaded-bralette.png'
-import beadedJewelleryPearlSiren from '../assets/beaded-jewellery-pearl-siren.jpg'
-import customPiece from '../assets/custom-piece.png'
+import beadedBralette from '../assets/products/beaded-bralette.png'
+import beadedJewelleryPearlSiren from '../assets/products/beaded-jewellery-pearl-siren.jpg'
+import customPiece from '../assets/products/custom-piece.png'
 import goldPendant from '../assets/products/gold-pendant.svg'
 import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverStuds from '../assets/collections/silver-studs.svg'
-import wearableArtBracelets from '../assets/wearable-art-bracelets.jpg'
+import wearableArtBracelets from '../assets/products/05B5EEF3-AC45-41DC-8E18-67212F7299BB.PNG'
 import { toCollectionRoute } from '../utils/routes'
 
 export const featuredCollections = [

@@ -2,7 +2,6 @@ import { CollectionSpotlight } from '../components/CollectionSpotlight'
 import { ThemeShowcaseHero } from '../components/ThemeShowcaseHero'
 import { LaunchHero } from '../components/LaunchHero'
 import { GiftBanner } from '../components/GiftBanner'
-import { MembershipForm } from '../components/MembershipForm'
 import { ProductGrid } from '../components/ProductGrid'
 import { MissionCollage } from '../components/MissionCollage'
 import { FAQAccordion } from '../components/FAQAccordion'
@@ -17,7 +16,6 @@ import {
   giftBannerContent,
   headerSocialLinks,
   launchContent,
-  membershipContent,
   missionContent,
   navLinks,
   featuredProducts,
@@ -44,7 +42,6 @@ export function HomePage() {
         items={collectionSections.featured.items}
       />
       <GiftBanner content={giftBannerContent} />
-      <MembershipForm content={membershipContent} />
       <ProductGrid
         id={productSection.id}
         eyebrow={productSection.eyebrow}

@@ -1,14 +1,14 @@
 import { brand } from '../config/brand'
-import chainBanner from '../assets/backgrounds/chain-banner.svg'
 import missionDetail from '../assets/editorial/mission-detail.svg'
 import blogCare from '../assets/editorial/blog-care.svg'
 import blogLayering from '../assets/editorial/blog-layering.svg'
 import blogOccasion from '../assets/editorial/blog-occasion.svg'
 import missionPortrait from '../assets/editorial/mission-portrait.svg'
 import missionStudio from '../assets/editorial/mission-studio.svg'
-import customOrderPearlSet from '../assets/custom-order-pearl-set.jpg'
-import customOrderPurpleCuff from '../assets/custom-order-arm-cuffs.jpg'
-import customOrderGoldChoker from '../assets/custom-order-gold-choker.jpg'
+import customOrderPearlSet from '../assets/custom-orders/custom-order-pearl-set.jpg'
+import customOrderPurpleCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
+import customOrderGoldChoker from '../assets/custom-orders/custom-order-gold-choker.jpg'
+import giftMomentsVideo from '../assets/make_it_a_seconds_video.mp4'
 import socialPendant from '../assets/social/social-pendant.svg'
 import socialPortrait from '../assets/social/social-portrait.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
@@ -318,7 +318,7 @@ export const giftBannerContent = {
     'Celebrate someone special with a handcrafted piece created with colour, detail and personal meaning.',
   cta: 'Explore Gift Ideas',
   href: toProductsRoute(),
-  background: chainBanner,
+  video: giftMomentsVideo,
 }
 
 export const membershipContent = {
@@ -341,7 +341,7 @@ export const productSection = {
   eyebrow: 'Featured pieces',
   title: 'Featured Creations',
   description:
-    'Temporary mock product cards representing Selah Starr Studio’s handmade beadwork, custom pieces, and wearable-art direction.',
+    'A curated edit of Selah Starr Studio’s handmade beadwork, custom pieces, and wearable-art designs — each one made to order.',
   cta: 'Enquire on WhatsApp',
   ctaHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
   ctaExternal: true,
