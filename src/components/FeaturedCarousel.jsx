@@ -1,9 +1,10 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { ChevronRight, ShoppingBag } from 'lucide-react'
 import { Button } from './Button'
 import { SectionHeading } from './SectionHeading'
 import { RevealOnScroll } from './RevealOnScroll'
 import { useCart } from '../hooks/useCart'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 export function FeaturedCarousel({
   id,
@@ -17,6 +18,7 @@ export function FeaturedCarousel({
 }) {
   const trackRef = useRef(null)
   const { addItem } = useCart()
+  const reducedMotion = useReducedMotion()
 
   const handleNext = () => {
     const track = trackRef.current
@@ -27,8 +29,17 @@ export function FeaturedCarousel({
       track.scrollTo({ left: 0, behavior: 'smooth' })
       return
     }
-    track.scrollBy({ left: track.clientWidth, behavior: 'smooth' })
+    const firstPanel = track.querySelector('.featured-carousel__panel')
+    const panelWidth = firstPanel?.getBoundingClientRect().width ?? track.clientWidth
+    track.scrollBy({ left: panelWidth, behavior: 'smooth' })
   }
+
+  useEffect(() => {
+    if (reducedMotion || products.length <= 1) return undefined
+
+    const intervalId = window.setInterval(handleNext, 4500)
+    return () => window.clearInterval(intervalId)
+  }, [products.length, reducedMotion])
 
   return (
     <section className="featured-carousel section" id={id}>
