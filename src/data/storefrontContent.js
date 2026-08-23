@@ -1,16 +1,16 @@
 import { brand } from '../config/brand'
-import missionDetail from '../assets/editorial/mission-detail.svg'
 import blogCare from '../assets/editorial/blog-care.svg'
 import blogLayering from '../assets/editorial/blog-layering.svg'
 import blogOccasion from '../assets/editorial/blog-occasion.svg'
-import missionPortrait from '../assets/editorial/mission-portrait.svg'
-import missionStudio from '../assets/editorial/mission-studio.svg'
+import missionPortraitPhoto from '../assets/instagram/Adorned in intention.Each curve, each coil, each crafted detail — a prayer of becoming.Selah Sta.jpg'
+import missionCouplePhoto from '../assets/instagram/Reposting this correctly this time “My love child 🫶🏾🥹“Shot by @giannasnapped Beaded fit @fres-2.jpg'
+import missionBraletteDetail from '../assets/instagram/Handcrafted with intention.Each beaded bralette is made to your exact measurements — offering fu.jpg'
 import customOrderPearlSet from '../assets/custom-orders/custom-order-pearl-set.jpg'
 import customOrderPurpleCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
 import customOrderGoldChoker from '../assets/custom-orders/custom-order-gold-choker.jpg'
 import giftMomentsVideo from '../assets/make_it_a_seconds_video.mp4'
+import socialPortraitPhoto from '../assets/instagram/Adorned in intention.Each curve, each coil, each crafted detail — a prayer of becoming.Selah Sta.jpg'
 import socialPendant from '../assets/social/social-pendant.svg'
-import socialPortrait from '../assets/social/social-portrait.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
 import socialSquareTwo from '../assets/social/social-square-two.svg'
 import socialWatch from '../assets/social/social-watch.svg'
@@ -357,16 +357,16 @@ export const missionContent = {
   href: '#contact',
   images: [
     {
-      src: missionPortrait,
-      alt: 'Temporary mock image representing a Selah Starr Studio portrait editorial',
+      src: missionPortraitPhoto,
+      alt: 'Editorial portrait of a model wearing a gold headwrap, hoop earrings, and a wire-wrapped ring, styled by Selah Starr Studio',
     },
     {
-      src: missionStudio,
-      alt: 'Temporary mock image representing a Selah Starr Studio studio detail',
+      src: missionCouplePhoto,
+      alt: 'A couple embracing in doorway light, styled with a handcrafted beaded bralette by Selah Starr Studio',
     },
     {
-      src: missionDetail,
-      alt: 'Temporary mock image representing handmade beadwork and decorative elements',
+      src: missionBraletteDetail,
+      alt: 'Close-up detail of a handcrafted beaded bralette in ocean colours by Selah Starr Studio',
     },
   ],
 }
@@ -435,8 +435,8 @@ export const socialContent = {
       alt: 'Temporary mock image representing handmade beadwork for Selah Starr Studio social content',
     },
     {
-      src: socialPortrait,
-      alt: 'Temporary mock image representing a Selah Starr Studio portrait social post',
+      src: socialPortraitPhoto,
+      alt: 'Selah Starr Studio portrait styled with golden accessories',
     },
     {
       src: socialSquareTwo,

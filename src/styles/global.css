@@ -1943,11 +1943,12 @@ input:focus-visible {
   display: grid;
   grid-template-columns: 0.96fr 0.74fr;
   gap: 18px;
-  align-items: end;
+  align-items: stretch;
 }
 
 .mission-collage__figure {
   margin: 0;
+  height: 100%;
   overflow: hidden;
   border-radius: 28px;
   box-shadow: var(--shadow-soft);
@@ -2059,6 +2060,8 @@ input:focus-visible {
 
 .social-collage__item {
   position: relative;
+  display: block;
+  min-height: 260px;
   overflow: hidden;
   border-radius: 24px;
 }
@@ -2074,7 +2077,7 @@ input:focus-visible {
 .social-collage__item img {
   width: 100%;
   height: 100%;
-  min-height: 260px;
+  min-height: 0;
   object-fit: cover;
   transition: transform 0.32s ease;
 }
@@ -2473,18 +2476,15 @@ input:focus-visible {
   }
 
   .mission-collage__media {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .mission-collage__figure--1 {
-    grid-row: auto;
-    min-height: 360px;
-  }
-
+  .mission-collage__figure--1,
   .mission-collage__figure--2,
   .mission-collage__figure--3 {
-    min-height: 180px;
+    grid-row: auto;
+    min-height: 320px;
   }
 
   .showcase-preview__three-up,
