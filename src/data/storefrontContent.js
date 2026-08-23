@@ -9,7 +9,6 @@ import customOrderPearlSet from '../assets/custom-orders/custom-order-pearl-set.
 import customOrderPurpleCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
 import customOrderGoldChoker from '../assets/custom-orders/custom-order-gold-choker.jpg'
 import giftMomentsVideo from '../assets/make_it_a_seconds_video.mp4'
-import socialPortraitPhoto from '../assets/instagram/Adorned in intention.Each curve, each coil, each crafted detail — a prayer of becoming.Selah Sta.jpg'
 import socialPendant from '../assets/social/social-pendant.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
 import socialSquareTwo from '../assets/social/social-square-two.svg'
@@ -205,9 +204,10 @@ export const navLinks = [
             href: toHomeSection('faq'),
           },
           {
-            label: 'Custom Request Form',
-            description: 'Submit a bespoke order enquiry',
-            href: toHomeSection('custom-order-form'),
+            label: 'Custom Order Enquiry',
+            description: 'Submit a bespoke order enquiry on WhatsApp',
+            href: buildWhatsAppUrl(whatsappMessages.customOrder),
+            external: true,
           },
         ],
       },
@@ -435,7 +435,7 @@ export const socialContent = {
       alt: 'Temporary mock image representing handmade beadwork for Selah Starr Studio social content',
     },
     {
-      src: socialPortraitPhoto,
+      src: missionPortraitPhoto,
       alt: 'Selah Starr Studio portrait styled with golden accessories',
     },
     {
@@ -558,28 +558,39 @@ export const blogPosts = [
 
 export const footerLinkGroups = [
   {
-    title: 'Shop',
+    title: 'Contact',
+    links: [
+      { label: `WhatsApp — ${brand.whatsappNumber}`, href: brand.whatsappUrl, external: true },
+      { label: `Instagram — ${brand.instagramHandle}`, href: brand.instagramUrl, external: true },
+      {
+        label: 'Start a Custom Order',
+        href: buildWhatsAppUrl(whatsappMessages.customOrder),
+        external: true,
+      },
+    ],
+  },
+  {
+    title: 'Support',
+    links: [
+      { label: 'FAQ', href: '#faq' },
+      { label: 'Shipping details to confirm', href: '#faq' },
+      { label: 'Returns details to confirm', href: '#faq' },
+    ],
+  },
+  {
+    title: 'About Us',
+    links: [
+      { label: 'About Selah Starr', href: '#mission' },
+      { label: 'Studio Journal', href: toJournalRoute() },
+      { label: 'Follow Our Journey', href: '#social' },
+    ],
+  },
+  {
+    title: 'Resources',
     links: [
       { label: 'Handmade Jewellery', href: toCollectionRoute('beaded-jewellery') },
       { label: 'Wearable Art', href: toCollectionRoute('wearable-art') },
       { label: 'Featured Creations', href: toProductsRoute() },
-    ],
-  },
-  {
-    title: 'Studio',
-    links: [
-      { label: 'About Selah Starr', href: '#mission' },
-      { label: 'Custom Orders', href: '#custom-order-form' },
-      { label: 'FAQ', href: '#faq' },
-    ],
-  },
-  {
-    title: 'Policies',
-    links: [
-      { label: 'Shipping details to confirm', href: '#faq' },
-      { label: 'Returns details to confirm', href: '#faq' },
-      { label: 'Contact us through Instagram', href: brand.instagramUrl, external: true },
-      { label: `WhatsApp: ${brand.whatsappNumber}`, href: brand.whatsappUrl, external: true },
     ],
   },
 ]
@@ -587,43 +598,9 @@ export const footerLinkGroups = [
 export const footerContent = {
   description:
     'Handmade jewellery, expressive beadwork and custom wearable art created to celebrate individuality.',
+  originNote: 'Handmade with care in Ghana',
   socialLinks,
-  contactLinks: [
-    {
-      label: 'Contact us on WhatsApp',
-      href: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
-      external: true,
-    },
-    {
-      label: 'Contact us through Instagram',
-      href: brand.instagramUrl,
-      external: true,
-    },
-  ],
-  contactDetails: [
-    {
-      label: 'WhatsApp',
-      value: brand.whatsappNumber,
-      href: brand.whatsappUrl,
-      external: true,
-    },
-  ],
-  customOrder: {
-    title: 'Start a Custom Order',
-    description:
-      'Share your preferred colours, measurements, occasion, and style notes to begin a WhatsApp custom-order conversation.',
-    fields: {
-      name: 'Name',
-      contact: 'Instagram handle, email, or phone',
-      details: 'Preferred colours, measurements, occasion, and style notes',
-    },
-    buttonLabel: 'Start a Custom Order on WhatsApp',
-    idleMessage:
-      'This form now opens WhatsApp with your custom-order details for a direct conversation with Selah Starr Studio.',
-    validationMessage: 'Add a contact method and a few request details before submitting.',
-    successMessage:
-      'Opening WhatsApp with your custom-order details.',
-  },
+  whatsappBadgeHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
   newsletter: {
     title: 'Join the Selah Starr Community',
     description:

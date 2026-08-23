@@ -6,7 +6,14 @@ function MobileMenuGroup({ title, links, onNavigate }) {
       <h3 className="mobile-menu-group__title">{title}</h3>
       <div>
         {links.map((item) => (
-          <a key={item.href} href={item.href} className="mobile-menu-link" onClick={onNavigate}>
+          <a
+            key={item.href}
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+            className="mobile-menu-link"
+            onClick={onNavigate}
+          >
             {item.label}
             {item.description ? (
               <span className="mobile-menu-link__description">{item.description}</span>

@@ -29,6 +29,8 @@ export function DesktopMegaMenu({
                   key={item.href}
                   ref={columnIndex === 0 && itemIndex === 0 ? firstLinkRef : undefined}
                   href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
                   className="mega-menu-column__link"
                   onClick={onClose}
                 >
