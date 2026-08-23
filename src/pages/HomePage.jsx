@@ -2,8 +2,7 @@ import { CollectionSpotlight } from '../components/CollectionSpotlight'
 import { ThemeShowcaseHero } from '../components/ThemeShowcaseHero'
 import { LaunchHero } from '../components/LaunchHero'
 import { GiftBanner } from '../components/GiftBanner'
-import { MembershipForm } from '../components/MembershipForm'
-import { ProductGrid } from '../components/ProductGrid'
+import { FeaturedCarousel } from '../components/FeaturedCarousel'
 import { MissionCollage } from '../components/MissionCollage'
 import { FAQAccordion } from '../components/FAQAccordion'
 import { SocialCollage } from '../components/SocialCollage'
@@ -17,7 +16,6 @@ import {
   giftBannerContent,
   headerSocialLinks,
   launchContent,
-  membershipContent,
   missionContent,
   navLinks,
   featuredProducts,
@@ -44,13 +42,12 @@ export function HomePage() {
         items={collectionSections.featured.items}
       />
       <GiftBanner content={giftBannerContent} />
-      <MembershipForm content={membershipContent} />
-      <ProductGrid
+      <FeaturedCarousel
         id={productSection.id}
         eyebrow={productSection.eyebrow}
         title={productSection.title}
         description={productSection.description}
-        products={featuredProducts}
+        products={featuredProducts.filter((product) => product.hasPhoto)}
         cta={productSection.cta}
         ctaHref={productSection.ctaHref}
         ctaExternal={productSection.ctaExternal}

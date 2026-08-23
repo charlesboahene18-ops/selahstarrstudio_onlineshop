@@ -1,17 +1,28 @@
 import { brand } from '../config/brand'
 import heroPortrait from '../assets/hero/hero-portrait.svg'
-import braceletStack from '../assets/products/bracelet-stack.svg'
-import goldPendant from '../assets/products/gold-pendant.svg'
 import goldRings from '../assets/products/gold-rings.svg'
 import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverPendant from '../assets/products/silver-pendant.svg'
+import beadedJewelleryPearlSiren from '../assets/products/beaded-jewellery-pearl-siren.jpg'
+import layeredBraceletStack from '../assets/instagram/E5108176-6256-4C42-9458-E1F2EF153F5F.PNG'
+import customWaistBeadSet from '../assets/kc9yvxkc9yvxkc9y.jpg'
+import pearlAndGoldSet from '../assets/custom-orders/custom-order-pearl-set.jpg'
+import crystalCascadeBralette from '../assets/products/beaded-bralette.png'
+import wireWrappedCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
+import wireWrappedChoker from '../assets/custom-orders/custom-order-gold-choker.jpg'
 import { buildProductWhatsAppUrl } from '../utils/whatsapp'
 import { toProductRoute } from '../utils/routes'
 
 const contactPriceLabel = 'Contact for pricing'
 const generalMaterial = 'Hand-selected beads and decorative elements'
 const careInstructions =
-  'Store dry, avoid harsh chemicals, and handle gently. Final care guidance remains editable until the client confirms product-specific instructions.'
+  'Store each piece flat in a dry pouch away from direct sunlight, put jewellery on after perfume and lotion, and wipe gently with a soft, dry cloth after wear.'
+
+function formatPriceLabel(price, currency) {
+  if (price == null) return contactPriceLabel
+  const symbol = currency === 'GHS' ? 'GH₵' : `${currency} `
+  return `${symbol}${price.toLocaleString('en-GH')}`
+}
 
 function createProduct({
   id,
@@ -24,6 +35,10 @@ function createProduct({
   imageAlt,
   colours,
   sizes,
+  material,
+  price = null,
+  hasPhoto = true,
+  shopLabel = 'Shop Now',
   featured = false,
   newArrival = false,
   bestSeller = false,
@@ -38,13 +53,15 @@ function createProduct({
     category,
     shortDescription,
     description,
-    price: null,
-    priceLabel: contactPriceLabel,
+    price,
+    priceLabel: formatPriceLabel(price, brand.currency),
     currency: brand.currency,
     images: [{ src: image, alt: imageAlt }],
+    hasPhoto,
+    shopLabel,
     colours,
     sizes,
-    material: generalMaterial,
+    material: material ?? generalMaterial,
     stock: null,
     featured,
     newArrival,
@@ -56,7 +73,7 @@ function createProduct({
     tags,
     careInstructions,
     productionTime: null,
-    isMockData: true,
+    isMockData: price == null,
     href: toProductRoute(slug),
     whatsappHref: buildProductWhatsAppUrl(name),
     whatsappLabel: madeToOrder ? 'Request on WhatsApp' : 'Enquire on WhatsApp',
@@ -70,54 +87,63 @@ export const allProducts = [
     name: 'Handcrafted Beaded Statement Necklace',
     category: 'Beaded Jewellery',
     shortDescription:
-      'A bold handcrafted necklace designed to bring colour, texture, and individuality to everyday styling.',
+      'A double-strand freshwater pearl necklace finished with a gold pavé cross pendant and faceted gemstone drops.',
     description:
-      'A handcrafted beaded statement piece created to bring colour, texture and individuality to your look. Custom colours and sizing may be requested. This is editable mock product content for development.',
-    image: goldPendant,
+      'Two strands of freshwater pearls come together beneath a row of faceted gemstone drops and a gold pavé cross pendant. A versatile statement piece that layers easily with everyday pieces or stands alone for special occasions.',
+    image: beadedJewelleryPearlSiren,
     imageAlt:
-      'Temporary mock image representing a handcrafted beaded statement necklace by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Custom sizing available'],
+      'Model wearing a layered freshwater pearl necklace with gemstone drops and a gold pavé cross pendant, handcrafted by Selah Starr Studio',
+    colours: ['Ivory freshwater pearl with mixed gemstone drops in amethyst, peridot, garnet, and quartz'],
+    sizes: ['Adjustable, approx. 40–45cm'],
+    material: 'Freshwater pearls, gold-plated brass, and faceted gemstone drops',
+    price: 450,
+    shopLabel: 'Shop the Necklace',
     featured: true,
     newArrival: true,
     bestSeller: true,
-    tags: ['statement', 'necklace', 'mock data'],
+    tags: ['statement', 'necklace', 'pearl'],
   }),
   createProduct({
     id: 'sss-002',
-    slug: 'layered-colour-bead-bracelet',
-    name: 'Layered Colour Bead Bracelet',
+    slug: 'layered-bracelet-stack',
+    name: 'Layered Bracelet Stack',
     category: 'Bracelets',
     shortDescription:
-      'A layered bracelet concept with playful bead spacing and an expressive studio-made finish.',
+      'A trio of stacked beaded bracelets combining matte onyx, red agate, and gold pavé panther details.',
     description:
-      'This layered bracelet mock-up reflects Selah Starr Studio’s expressive handmade direction, with room for custom colour stories and sizing requests before launch details are confirmed.',
-    image: braceletStack,
+      'Worn together as a set, this trio of stacked bracelets pairs matte onyx with rich red agate and gold pavé panther-head accents. Each strand can also be requested on its own for a more understated everyday look.',
+    image: layeredBraceletStack,
     imageAlt:
-      'Temporary mock image representing a layered colour bead bracelet by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Custom sizing available'],
+      'A stack of three beaded bracelets in matte onyx, red agate, and gold pavé panther-head details, worn on the wrist',
+    colours: ['Matte onyx, red agate, and gold-plated accents'],
+    sizes: ['Stretch fit, one size (approx. 17–19cm)'],
+    material: 'Matte onyx beads, red agate, and gold-plated cubic zirconia accents',
+    price: 280,
+    shopLabel: 'Shop the Bracelet',
     featured: true,
     bestSeller: true,
-    tags: ['bracelet', 'layered', 'mock data'],
+    tags: ['bracelet', 'layered', 'onyx'],
   }),
   createProduct({
     id: 'sss-003',
-    slug: 'sculptural-beaded-earrings',
-    name: 'Sculptural Beaded Earrings',
+    slug: 'pearl-and-gold-drop-earrings',
+    name: 'Pearl and Gold Drop Earrings',
     category: 'Earrings',
     shortDescription:
-      'Statement earrings with movement, colour contrast, and handcrafted character.',
+      'Freshwater pearl drop earrings finished with gold-plated hoops, designed to pair with the matching pearl necklace and bracelet.',
     description:
-      'Designed as wearable art, these mock sculptural earrings suggest movement and texture through layered beadwork. Colour combinations and sizing remain editable until the client confirms the final assortment.',
-    image: silverPendant,
+      'These drop earrings pair genuine freshwater pearls with gold-plated hoops and beaded spacers. Offered as huggie hoops or classic ear-wire dangles, they complete the matching pearl necklace and bracelet for a polished, cohesive look.',
+    image: pearlAndGoldSet,
     imageAlt:
-      'Temporary mock image representing sculptural beaded earrings by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['One size'],
+      'Two pairs of freshwater pearl and gold-plated drop earrings styled alongside a matching pearl necklace and bracelet by Selah Starr Studio',
+    colours: ['Freshwater pearl with gold-plated hoops and beads'],
+    sizes: ['One size — hoop or ear-wire dangle styles available'],
+    material: 'Freshwater pearls and gold-plated brass findings',
+    price: 150,
+    shopLabel: 'Shop the Earrings',
     featured: true,
     newArrival: true,
-    tags: ['earrings', 'wearable art', 'mock data'],
+    tags: ['earrings', 'pearl', 'gold'],
   }),
   createProduct({
     id: 'sss-004',
@@ -125,36 +151,41 @@ export const allProducts = [
     name: 'Custom Waist Bead Set',
     category: 'Waist Beads',
     shortDescription:
-      'A custom waist bead concept created around personal colour preferences and measurements.',
+      'A made-to-measure waist bead set created around your preferred colours and desired fit.',
     description:
-      'This editable mock waist bead set is positioned as a made-to-order piece shaped around preferred colours, measurements, and occasion-based styling.',
-    image: goldRings,
-    imageAlt:
-      'Temporary mock image representing a custom waist bead set by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Measurement-based fit'],
+      'Each waist bead set is made to order after a short consultation on colour, bead size, and fit. Popular for everyday wear, body appreciation, and gifting, every strand is finished by hand to your measurements.',
+    image: customWaistBeadSet,
+    imageAlt: 'Custom waist bead set by Selah Starr Studio, made to order in your chosen colours',
+    colours: ['Made to order in your preferred colour palette'],
+    sizes: ['Measured to your waist for a personal fit'],
+    material: 'Glass and acrylic beads on adjustable elastic or string',
+    price: 120,
+    hasPhoto: true,
     featured: true,
     bestSeller: true,
-    tags: ['waist beads', 'custom', 'mock data'],
+    tags: ['waist beads', 'custom'],
   }),
   createProduct({
     id: 'sss-005',
-    slug: 'pearl-and-crystal-bralette',
-    name: 'Pearl and Crystal Bralette',
+    slug: 'crystal-cascade-bralette',
+    name: 'Crystal Cascade Bralette',
     category: 'Beaded Bralettes',
     shortDescription:
-      'A dramatic bralette concept designed for styling moments, celebrations, and performance looks.',
+      'A dramatic beaded bralette in ruby and pink crystal, finished with cascading fringe and a hand-set agate pendant.',
     description:
-      'This temporary bralette concept presents a more sculptural Selah Starr Studio direction, pairing beadwork, decorative elements, and a made-to-order fit. Final materials and pricing remain unconfirmed.',
-    image: heroPortrait,
+      'Built entirely from faceted crystal beads, this bralette drapes into a cascading fringe finished with a hand-set agate pendant. Made to measure for performance looks, photoshoots, and standout occasion styling.',
+    image: crystalCascadeBralette,
     imageAlt:
-      'Temporary mock image representing a pearl and crystal beaded bralette by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Made-to-measure'],
+      'Ruby and pink crystal beaded bralette with cascading fringe and a hand-set agate pendant, handcrafted by Selah Starr Studio',
+    colours: ['Ruby red and pink crystal with clear accent drops'],
+    sizes: ['Made-to-measure, fitted to your bust and torso length'],
+    material: 'Faceted glass crystal beads, gold-plated chain, and an agate cabochon pendant',
+    price: 650,
+    shopLabel: 'Shop the Bralette',
     featured: true,
     newArrival: true,
     bestSeller: true,
-    tags: ['bralette', 'statement', 'mock data'],
+    tags: ['bralette', 'statement', 'crystal'],
   }),
   createProduct({
     id: 'sss-006',
@@ -162,51 +193,59 @@ export const allProducts = [
     name: 'Multicolour Beaded Bralette',
     category: 'Beaded Bralettes',
     shortDescription:
-      'A high-impact bralette concept built around colour, pattern, and stage-ready presence.',
+      'A high-impact bralette built around your chosen colour palette, made to measure for standout styling.',
     description:
-      'This mock product highlights Selah Starr Studio’s wearable-art positioning through layered colour and beadwork intended for custom requests, styled shoots, and bold occasion dressing.',
+      'This bralette is created around a bold colour combination chosen at consultation, giving you a custom-fit statement piece for editorials, performances, or special occasions. Share your palette and measurements to begin.',
     image: minimalWatch,
-    imageAlt:
-      'Temporary mock image representing a multicolour beaded bralette by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Made-to-measure'],
+    imageAlt: 'Multicolour beaded bralette concept by Selah Starr Studio, made to order in your chosen colours',
+    colours: ['Made to order in your chosen colour combination'],
+    sizes: ['Made-to-measure, fitted to your bust and torso length'],
+    material: 'Hand-selected glass and acrylic beads on flexible thread',
+    price: 580,
+    hasPhoto: false,
     featured: true,
-    tags: ['bralette', 'colour', 'mock data'],
+    tags: ['bralette', 'colour'],
   }),
   createProduct({
     id: 'sss-007',
-    slug: 'custom-festival-body-piece',
-    name: 'Custom Festival Body Piece',
+    slug: 'wire-wrapped-statement-cuff',
+    name: 'Wire-Wrapped Statement Cuff',
     category: 'Wearable Art',
     shortDescription:
-      'A custom body piece concept for styling around movement, events, and personal expression.',
+      'A sculptural arm cuff hand-coiled in amethyst wire and finished with faceted crystal accents.',
     description:
-      'This wearable-art mock entry is framed as a custom conversation piece shaped around the wearer’s preferred colours, fit notes, and event styling goals.',
-    image: braceletStack,
+      'This wearable-art cuff is hand-coiled from coloured wire into a spiralling silhouette, finished with faceted crystal accents. Made to measure for festivals, editorials, and statement styling.',
+    image: wireWrappedCuff,
     imageAlt:
-      'Temporary mock image representing a custom festival body piece by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Made-to-measure'],
+      'Sculptural amethyst wire-wrapped arm cuff with faceted crystal accents, handcrafted by Selah Starr Studio',
+    colours: ['Amethyst purple wire with clear crystal accents'],
+    sizes: ['Made-to-measure, wraps to fit your upper arm'],
+    material: 'Hand-coiled coloured wire and faceted crystal beads',
+    price: 320,
+    shopLabel: 'Shop the Cuff',
     featured: true,
     bestSeller: true,
-    tags: ['body piece', 'custom', 'mock data'],
+    tags: ['wearable art', 'wire wrap', 'custom'],
   }),
   createProduct({
     id: 'sss-008',
-    slug: 'handwoven-beaded-choker',
-    name: 'Handwoven Beaded Choker',
+    slug: 'wire-wrapped-charm-choker',
+    name: 'Wire-Wrapped Charm Choker',
     category: 'Beaded Necklaces',
     shortDescription:
-      'A close-fit necklace concept with handwoven texture and bold handcrafted detailing.',
+      'A hand-coiled gold wire choker finished with a wire-wrapped mother-of-pearl drop pendant.',
     description:
-      'This choker mock-up is positioned as a detailed handwoven piece with an expressive silhouette and flexible custom-colour direction. Final materials, sizing notes, and pricing remain editable.',
-    image: goldPendant,
+      'This close-fit choker is hand-coiled from gold-plated wire and finished with a wire-wrapped mother-of-pearl drop. A versatile everyday piece that layers easily with longer necklaces.',
+    image: wireWrappedChoker,
     imageAlt:
-      'Temporary mock image representing a handwoven beaded choker by Selah Starr Studio',
-    colours: ['Editable mock colourways'],
-    sizes: ['Custom sizing available'],
+      'Hand-coiled gold wire choker with a wire-wrapped mother-of-pearl drop pendant, handcrafted by Selah Starr Studio',
+    colours: ['Gold-plated wire with a mother-of-pearl drop'],
+    sizes: ['Adjustable, fits most neck sizes'],
+    material: 'Hand-coiled gold-plated wire and a wire-wrapped mother-of-pearl drop',
+    price: 220,
+    shopLabel: 'Shop the Choker',
     featured: true,
-    tags: ['choker', 'necklace', 'mock data'],
+    tags: ['choker', 'necklace', 'wire wrap'],
   }),
   createProduct({
     id: 'sss-009',
@@ -222,6 +261,7 @@ export const allProducts = [
       'Temporary mock image representing a beaded shoulder accessory by Selah Starr Studio',
     colours: ['Editable mock colourways'],
     sizes: ['Made-to-measure'],
+    hasPhoto: false,
     tags: ['shoulder accessory', 'custom', 'mock data'],
   }),
   createProduct({
@@ -239,6 +279,7 @@ export const allProducts = [
     colours: ['Editable mock colourways'],
     sizes: ['Made-to-measure'],
     bestSeller: true,
+    hasPhoto: false,
     tags: ['bridal', 'custom', 'mock data'],
   }),
   createProduct({
@@ -256,6 +297,7 @@ export const allProducts = [
     colours: ['Editable mock colourways'],
     sizes: ['Custom sizing available'],
     newArrival: true,
+    hasPhoto: false,
     tags: ['fringe', 'necklace', 'mock data'],
   }),
   createProduct({
@@ -272,6 +314,7 @@ export const allProducts = [
       'Temporary mock image representing an artistic beaded body chain by Selah Starr Studio',
     colours: ['Editable mock colourways'],
     sizes: ['Made-to-measure'],
+    hasPhoto: false,
     tags: ['body chain', 'wearable art', 'mock data'],
   }),
 ]

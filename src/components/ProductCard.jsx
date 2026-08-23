@@ -1,4 +1,4 @@
-import { Eye, ShoppingBag } from 'lucide-react'
+import { Image as ImageIcon, ShoppingBag } from 'lucide-react'
 import { Button } from './Button'
 import { useCart } from '../hooks/useCart'
 
@@ -8,16 +8,18 @@ export function ProductCard({ product }) {
   return (
     <article className="product-card">
       <a className="product-card__image" href={product.href}>
-        <img src={product.images[0].src} alt={product.images[0].alt} loading="lazy" />
-        <span className="product-card__quick-action">
-          <Eye size={16} />
-          View details
-        </span>
+        {product.hasPhoto ? (
+          <img src={product.images[0].src} alt={product.images[0].alt} loading="lazy" />
+        ) : (
+          <span className="product-card__image-placeholder" role="img" aria-label={product.images[0].alt}>
+            <ImageIcon size={26} strokeWidth={1.5} />
+          </span>
+        )}
       </a>
       <div className="product-card__copy">
-        <span>{product.isMockData ? `${product.category} · Mock` : product.category}</span>
-        <h3>{product.name}</h3>
-        <p>{product.priceLabel}</p>
+        <span className="product-card__category">{product.category}</span>
+        <h3 className="product-card__title">{product.name}</h3>
+        <p className="product-card__price">{product.priceLabel}</p>
         <div className="product-card__actions">
           <Button
             as="button"
@@ -28,16 +30,6 @@ export function ProductCard({ product }) {
           >
             <ShoppingBag size={14} />
             Add to cart
-          </Button>
-          <Button
-            as="a"
-            href={product.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="button--small button--whatsapp"
-            aria-label={`${product.whatsappLabel} for ${product.name}`}
-          >
-            {product.whatsappLabel}
           </Button>
         </div>
       </div>

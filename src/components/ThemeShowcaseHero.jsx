@@ -1,5 +1,5 @@
 import { Header } from './Header'
-import heroImage from '../assets/Image Aug 1, 2026 at 01_39_24 PM.png'
+import heroImage from '../assets/hero/Image Aug 1, 2026 at 01_39_24 PM.png'
 
 export function ThemeShowcaseHero({ content, navLinks, products, socialLinks }) {
   return (
