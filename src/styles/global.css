@@ -112,6 +112,10 @@ button {
   padding-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
+.featured-carousel.section {
+  width: min(1480px, calc(100vw - (clamp(0.75rem, 2.2vw, 1.5rem) * 2)));
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -1457,6 +1461,7 @@ input:focus-visible {
   color: var(--muted);
 }
 
+.gift-banner__media,
 .membership-form__card,
 .social-collage__panel {
   border-radius: var(--radius-xl);
@@ -1730,6 +1735,12 @@ input:focus-visible {
   scroll-snap-align: start;
 }
 
+.featured-carousel__panel-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .featured-carousel__panel img {
   position: absolute;
   inset: 0;
@@ -1740,7 +1751,7 @@ input:focus-visible {
 }
 
 .featured-carousel__panel:hover img,
-.featured-carousel__panel:focus-visible img {
+.featured-carousel__panel-link:focus-visible img {
   transform: scale(1.045);
 }
 
@@ -1756,7 +1767,7 @@ input:focus-visible {
 }
 
 .featured-carousel__panel:hover .featured-carousel__overlay,
-.featured-carousel__panel:focus-visible .featured-carousel__overlay {
+.featured-carousel__panel-link:focus-visible .featured-carousel__overlay {
   background: linear-gradient(
     to bottom,
     rgba(20, 15, 8, 0) 24%,
@@ -1772,6 +1783,7 @@ input:focus-visible {
   display: grid;
   gap: 6px;
   padding: clamp(16px, 2.4vw, 26px);
+  padding-right: clamp(64px, 10vw, 84px);
 }
 
 .featured-carousel__category {
@@ -1816,14 +1828,48 @@ input:focus-visible {
 }
 
 .featured-carousel__panel:hover .featured-carousel__shop,
-.featured-carousel__panel:focus-visible .featured-carousel__shop {
+.featured-carousel__panel-link:focus-visible .featured-carousel__shop {
   background: #ffffff;
   transform: translateY(-2px);
 }
 
-.featured-carousel__panel:focus-visible {
+.featured-carousel__panel-link:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: -2px;
+}
+
+.featured-carousel__cart-button {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.96);
+  color: var(--ink);
+  box-shadow: 0 10px 20px rgba(33, 24, 10, 0.22);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.featured-carousel__cart-button:hover,
+.featured-carousel__cart-button:focus-visible {
+  transform: scale(1.06);
+  box-shadow: 0 14px 26px rgba(33, 24, 10, 0.28);
+  background: #ffffff;
+}
+
+.featured-carousel__cart-button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 .featured-carousel__nav {

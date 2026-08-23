@@ -5,6 +5,7 @@ import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverPendant from '../assets/products/silver-pendant.svg'
 import beadedJewelleryPearlSiren from '../assets/products/beaded-jewellery-pearl-siren.jpg'
 import layeredBraceletStack from '../assets/instagram/E5108176-6256-4C42-9458-E1F2EF153F5F.PNG'
+import customWaistBeadSet from '../assets/kc9yvxkc9yvxkc9y.jpg'
 import pearlAndGoldSet from '../assets/custom-orders/custom-order-pearl-set.jpg'
 import crystalCascadeBralette from '../assets/products/beaded-bralette.png'
 import wireWrappedCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
@@ -118,7 +119,7 @@ export const allProducts = [
     sizes: ['Stretch fit, one size (approx. 17–19cm)'],
     material: 'Matte onyx beads, red agate, and gold-plated cubic zirconia accents',
     price: 280,
-    shopLabel: 'Shop the Bracelet Stack',
+    shopLabel: 'Shop the Bracelet',
     featured: true,
     bestSeller: true,
     tags: ['bracelet', 'layered', 'onyx'],
@@ -153,13 +154,13 @@ export const allProducts = [
       'A made-to-measure waist bead set created around your preferred colours and desired fit.',
     description:
       'Each waist bead set is made to order after a short consultation on colour, bead size, and fit. Popular for everyday wear, body appreciation, and gifting, every strand is finished by hand to your measurements.',
-    image: goldRings,
+    image: customWaistBeadSet,
     imageAlt: 'Custom waist bead set by Selah Starr Studio, made to order in your chosen colours',
     colours: ['Made to order in your preferred colour palette'],
     sizes: ['Measured to your waist for a personal fit'],
     material: 'Glass and acrylic beads on adjustable elastic or string',
     price: 120,
-    hasPhoto: false,
+    hasPhoto: true,
     featured: true,
     bestSeller: true,
     tags: ['waist beads', 'custom'],
