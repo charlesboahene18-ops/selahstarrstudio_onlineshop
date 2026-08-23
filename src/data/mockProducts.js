@@ -3,7 +3,7 @@ import heroPortrait from '../assets/hero/hero-portrait.svg'
 import goldRings from '../assets/products/gold-rings.svg'
 import minimalWatch from '../assets/products/minimal-watch.svg'
 import silverPendant from '../assets/products/silver-pendant.svg'
-import beadedJewelleryPearlSiren from '../assets/products/beaded-jewellery-pearl-siren.jpg'
+import prismaticHeartsNecklace from '../assets/instagram/Love isn’t one color.It isn’t one moment.It isn’t one story.Prismatic Hearts is a celebration of.jpg'
 import layeredBraceletStack from '../assets/instagram/E5108176-6256-4C42-9458-E1F2EF153F5F.PNG'
 import customWaistBeadSet from '../assets/kc9yvxkc9yvxkc9y.jpg'
 import pearlAndGoldSet from '../assets/custom-orders/custom-order-pearl-set.jpg'
@@ -87,15 +87,15 @@ export const allProducts = [
     name: 'Handcrafted Beaded Statement Necklace',
     category: 'Beaded Jewellery',
     shortDescription:
-      'A double-strand freshwater pearl necklace finished with a gold pavé cross pendant and faceted gemstone drops.',
+      'A gold chain necklace set with a rainbow of heart-shaped gemstones, finished with a matching lariat drop.',
     description:
-      'Two strands of freshwater pearls come together beneath a row of faceted gemstone drops and a gold pavé cross pendant. A versatile statement piece that layers easily with everyday pieces or stands alone for special occasions.',
-    image: beadedJewelleryPearlSiren,
+      'Each heart-shaped gemstone is bezel-set along a fine gold chain, finished with a matching lariat drop at the front. A colourful, versatile statement piece that layers beautifully or shines on its own.',
+    image: prismaticHeartsNecklace,
     imageAlt:
-      'Model wearing a layered freshwater pearl necklace with gemstone drops and a gold pavé cross pendant, handcrafted by Selah Starr Studio',
-    colours: ['Ivory freshwater pearl with mixed gemstone drops in amethyst, peridot, garnet, and quartz'],
+      'Model wearing a gold chain necklace set with multicolour heart-shaped gemstones and a matching lariat drop, handcrafted by Selah Starr Studio',
+    colours: ['Gold-plated chain with multicolour heart-cut gemstone settings in ruby, emerald, sapphire, amethyst, and citrine tones'],
     sizes: ['Adjustable, approx. 40–45cm'],
-    material: 'Freshwater pearls, gold-plated brass, and faceted gemstone drops',
+    material: 'Gold-plated brass chain with faceted glass gemstone settings',
     price: 450,
     shopLabel: 'Shop the Necklace',
     featured: true,

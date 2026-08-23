@@ -9,7 +9,6 @@ import customOrderPearlSet from '../assets/custom-orders/custom-order-pearl-set.
 import customOrderPurpleCuff from '../assets/custom-orders/custom-order-arm-cuffs.jpg'
 import customOrderGoldChoker from '../assets/custom-orders/custom-order-gold-choker.jpg'
 import giftMomentsVideo from '../assets/make_it_a_seconds_video.mp4'
-import socialPortraitPhoto from '../assets/instagram/Adorned in intention.Each curve, each coil, each crafted detail — a prayer of becoming.Selah Sta.jpg'
 import socialPendant from '../assets/social/social-pendant.svg'
 import socialSquareOne from '../assets/social/social-square-one.svg'
 import socialSquareTwo from '../assets/social/social-square-two.svg'
@@ -435,7 +434,7 @@ export const socialContent = {
       alt: 'Temporary mock image representing handmade beadwork for Selah Starr Studio social content',
     },
     {
-      src: socialPortraitPhoto,
+      src: missionPortraitPhoto,
       alt: 'Selah Starr Studio portrait styled with golden accessories',
     },
     {
