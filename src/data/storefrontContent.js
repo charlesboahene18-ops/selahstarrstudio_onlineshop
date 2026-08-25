@@ -597,7 +597,6 @@ export const footerContent = {
     'Handmade jewellery, expressive beadwork and custom wearable art created to celebrate individuality.',
   originNote: 'Handmade with care in Ghana',
   socialLinks,
-  whatsappBadgeHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
   newsletter: {
     title: 'Join the Selah Starr Community',
     description:

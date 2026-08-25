@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { BrandMark } from './BrandMark'
 import { SocialLinks } from './SocialLinks'
-import { WhatsAppIcon } from './WhatsAppIcon'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -79,16 +78,6 @@ export function Footer({ content, groups }) {
           <small>{content.copyright}</small>
           <small>{content.originNote}</small>
         </div>
-        <a
-          className="site-footer__badge"
-          href={content.whatsappBadgeHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat with Selah Starr Studio on WhatsApp"
-          title="Chat on WhatsApp"
-        >
-          <WhatsAppIcon size={20} />
-        </a>
       </div>
     </footer>
   )
