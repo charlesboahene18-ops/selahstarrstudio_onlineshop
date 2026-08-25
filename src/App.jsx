@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { AnnouncementMarquee } from './components/AnnouncementMarquee'
+import { FloatingContactWidget } from './components/FloatingContactWidget'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { CartProvider } from './context/CartContext'
@@ -199,6 +200,7 @@ export default function App() {
         )}
         <main>{page}</main>
         <Footer content={footerContent} groups={footerLinkGroups} />
+        <FloatingContactWidget />
       </div>
     </CartProvider>
   )
