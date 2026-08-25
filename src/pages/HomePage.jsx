@@ -45,8 +45,6 @@ export function HomePage() {
       <FeaturedCarousel
         id={productSection.id}
         eyebrow={productSection.eyebrow}
-        title={productSection.title}
-        description={productSection.description}
         products={featuredProducts.filter((product) => product.hasPhoto)}
         cta={productSection.cta}
         ctaHref={productSection.ctaHref}
