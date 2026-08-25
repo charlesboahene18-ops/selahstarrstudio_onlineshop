@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { AnnouncementMarquee } from './components/AnnouncementMarquee'
+import { FloatingContactWidget } from './components/FloatingContactWidget'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { CartProvider } from './context/CartContext'
@@ -22,6 +23,20 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductPage } from './pages/ProductPage'
 import { ProductsPage } from './pages/ProductsPage'
 import { parseHashRoute } from './utils/routes'
+
+// A stale section-anchor hash (e.g. `#contact`, left over from an earlier
+// in-app nav click) makes the browser's native "scroll to fragment" behavior
+// jump straight to that element on a hard refresh — before our own scroll
+// logic below even gets a say. Strip it from the URL bar before React mounts
+// so there's nothing left for the browser to jump to. Real SPA routes
+// (`#/products`, `#/cart`, ...) are left untouched so refreshing on those
+// still works.
+if (typeof window !== 'undefined') {
+  const { hash } = window.location
+  if (hash && hash !== '#' && !hash.startsWith('#/')) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
+}
 
 const HOME_SCROLL_STORAGE_KEY = 'sss:home-scroll-y'
 
@@ -57,7 +72,6 @@ export default function App() {
   const [route, setRoute] = useState(() => parseHashRoute(window.location.hash))
   const isHomeRoute = route.name === 'home'
   const routeRef = useRef(route)
-  const isPopNavigationRef = useRef(false)
   const hasMountedRef = useRef(false)
 
   const scrollToTop = () => {
@@ -69,23 +83,6 @@ export default function App() {
   // in a single-document hash router.
   useEffect(() => {
     window.history.scrollRestoration = 'auto'
-  }, [])
-
-  useEffect(() => {
-    routeRef.current = route
-  }, [route])
-
-  useEffect(() => {
-    // Back/forward through session history fires `popstate` just before
-    // `hashchange` for same-document navigations; a link click or
-    // `location.hash = ...` assignment fires only `hashchange`. This is the
-    // only reliable way to tell the two apart in a hash router.
-    const onPopState = () => {
-      isPopNavigationRef.current = true
-    }
-
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
   useEffect(() => {
@@ -101,24 +98,31 @@ export default function App() {
   }, [])
 
   useLayoutEffect(() => {
-    const wasPopNavigation = isPopNavigationRef.current
-    isPopNavigationRef.current = false
+    // `routeRef` still holds the previous route here — this layout effect runs
+    // before the plain effect below that syncs it to the latest value.
+    const previousRoute = routeRef.current
 
     const isFirstRender = !hasMountedRef.current
     hasMountedRef.current = true
 
-    // Returning to Home via Back/Forward: restore the exact position the user
-    // scrolled to before leaving, applied synchronously (before paint) so
-    // there's no visible jump to the top first.
-    if (route.name === 'home' && wasPopNavigation) {
+    // Coming back to Home from another page (Back/Forward, or a Home/logo
+    // link click) restores the exact position the user scrolled to before
+    // leaving, applied synchronously (before paint) so there's no visible
+    // jump to the top first. We detect this from the route transition itself
+    // rather than the `popstate` event — browsers fire `popstate` for every
+    // same-document hash navigation here, not just history traversal, so it
+    // can't reliably distinguish "came back to Home" from "clicked a section
+    // link while already on Home".
+    if (!isFirstRender && route.name === 'home' && previousRoute.name !== 'home') {
       scrollInstantTo(readStoredHomeScrollY())
       return
     }
 
     // On first mount (fresh load or a manual refresh), leave the scroll
     // position exactly as the browser already placed it instead of forcing
-    // it to the top.
-    if (isFirstRender && (route.name !== 'home' || !route.sectionId || route.sectionId === 'home')) {
+    // it to the top or jumping to whatever section a stale `#hash` (e.g.
+    // `#contact`) still in the URL bar happens to point at.
+    if (isFirstRender) {
       return
     }
 
@@ -142,6 +146,10 @@ export default function App() {
         })
       }
     })
+  }, [route])
+
+  useEffect(() => {
+    routeRef.current = route
   }, [route])
 
   const productBySlug = useMemo(
@@ -199,6 +207,7 @@ export default function App() {
         )}
         <main>{page}</main>
         <Footer content={footerContent} groups={footerLinkGroups} />
+        <FloatingContactWidget />
       </div>
     </CartProvider>
   )

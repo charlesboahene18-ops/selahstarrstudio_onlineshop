@@ -91,7 +91,7 @@ export function FeaturedCarousel({
           href={ctaHref}
           target={ctaExternal ? '_blank' : undefined}
           rel={ctaExternal ? 'noopener noreferrer' : undefined}
-          className={ctaExternal ? 'button--whatsapp' : ''}
+          className={ctaExternal ? 'button--whatsapp' : 'button--dark'}
         >
           {cta}
         </Button>

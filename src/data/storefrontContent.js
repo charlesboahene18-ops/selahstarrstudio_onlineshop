@@ -339,12 +339,9 @@ export const membershipContent = {
 export const productSection = {
   id: 'bestsellers',
   eyebrow: 'Featured pieces',
-  title: 'Featured Creations',
-  description:
-    'A curated edit of Selah Starr Studio’s handmade beadwork, custom pieces, and wearable-art designs — each one made to order.',
-  cta: 'Enquire on WhatsApp',
-  ctaHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
-  ctaExternal: true,
+  cta: 'View All Products',
+  ctaHref: toProductsRoute(),
+  ctaExternal: false,
 }
 
 export const missionContent = {
@@ -600,7 +597,6 @@ export const footerContent = {
     'Handmade jewellery, expressive beadwork and custom wearable art created to celebrate individuality.',
   originNote: 'Handmade with care in Ghana',
   socialLinks,
-  whatsappBadgeHref: buildWhatsAppUrl(whatsappMessages.generalEnquiry),
   newsletter: {
     title: 'Join the Selah Starr Community',
     description:

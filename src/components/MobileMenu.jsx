@@ -1,4 +1,14 @@
-import { MobileMenuSection } from './MobileMenuSection'
+import { useEffect, useState } from 'react'
+import { ChevronDown, ChevronLeft, ChevronRight, Instagram } from 'lucide-react'
+import { WhatsAppIcon } from './WhatsAppIcon'
+import { brand } from '../config/brand'
+import { buildWhatsAppUrl, whatsappMessages } from '../utils/whatsapp'
+
+const TOP_SECTIONS = [
+  { key: 'shop', label: 'Shop' },
+  { key: 'collections', label: 'Collections' },
+  { key: 'about', label: 'About' },
+]
 
 function MobileMenuGroup({ title, links, onNavigate }) {
   return (
@@ -25,7 +35,7 @@ function MobileMenuGroup({ title, links, onNavigate }) {
   )
 }
 
-function MobileMenuContent({ menu, onNavigate, showViewAll = false }) {
+function MobileMenuDetail({ menu, showViewAll, onNavigate }) {
   if (!menu) {
     return null
   }
@@ -60,9 +70,20 @@ export function MobileMenu({
   panelRef,
   topOffset,
 }) {
-  const shopMenu = navLinks.find((link) => link.label === 'Shop') ?? null
-  const collectionsMenu = navLinks.find((link) => link.label === 'Collections') ?? null
-  const aboutMenu = navLinks.find((link) => link.label === 'About') ?? null
+  const [helperOpen, setHelperOpen] = useState(false)
+  const activeMenu = navLinks.find((link) => link.label.toLowerCase() === activeSection) ?? null
+
+  useEffect(() => {
+    if (!open) {
+      setHelperOpen(false)
+    }
+  }, [open])
+
+  const goBack = () => {
+    if (activeSection) {
+      onSectionToggle(activeSection)
+    }
+  }
 
   return (
     <div
@@ -86,36 +107,109 @@ export function MobileMenu({
           className={`mobile-navigation ${open ? 'mobile-navigation--open' : ''}`}
           aria-label="Mobile navigation"
         >
-          <div className="mobile-menu__links">
-            <MobileMenuSection
-              id="mobile-shop-menu"
-              label="SHOP"
-              isOpen={activeSection === 'shop'}
-              onToggle={() => onSectionToggle('shop')}
-              buttonRef={firstFocusableRef}
+          <div className="mobile-menu__screen">
+            <div
+              className={[
+                'mobile-menu__level',
+                'mobile-menu__level--top',
+                activeSection ? 'is-hidden' : '',
+              ].join(' ').trim()}
+              aria-hidden={!!activeSection}
+              inert={activeSection ? true : undefined}
             >
-              <MobileMenuContent menu={shopMenu} onNavigate={onClose} showViewAll />
-            </MobileMenuSection>
+              <div className="mobile-menu__links">
+                {TOP_SECTIONS.map((section, index) => (
+                  <button
+                    key={section.key}
+                    ref={index === 0 ? firstFocusableRef : undefined}
+                    type="button"
+                    className="mobile-menu-toplink"
+                    onClick={() => onSectionToggle(section.key)}
+                  >
+                    <span>{section.label}</span>
+                    <ChevronRight size={18} aria-hidden="true" />
+                  </button>
+                ))}
+              </div>
+            </div>
 
-            <MobileMenuSection
-              id="mobile-collections-menu"
-              label="COLLECTIONS"
-              isOpen={activeSection === 'collections'}
-              onToggle={() => onSectionToggle('collections')}
+            <div
+              className={[
+                'mobile-menu__level',
+                'mobile-menu__level--detail',
+                activeSection ? 'is-visible' : '',
+              ].join(' ').trim()}
+              aria-hidden={!activeSection}
+              inert={!activeSection ? true : undefined}
             >
-              <MobileMenuContent menu={collectionsMenu} onNavigate={onClose} />
-            </MobileMenuSection>
+              <button type="button" className="mobile-menu-back" onClick={goBack}>
+                <ChevronLeft size={18} aria-hidden="true" />
+                <span>Back</span>
+              </button>
 
-            <MobileMenuSection
-              id="mobile-about-menu"
-              label="ABOUT"
-              isOpen={activeSection === 'about'}
-              onToggle={() => onSectionToggle('about')}
-            >
-              <MobileMenuContent menu={aboutMenu} onNavigate={onClose} />
-            </MobileMenuSection>
+              <div className="mobile-menu__links">
+                <MobileMenuDetail
+                  menu={activeMenu}
+                  showViewAll={activeSection === 'shop'}
+                  onNavigate={onClose}
+                />
+              </div>
+            </div>
           </div>
         </nav>
+
+        <div className="mobile-menu__footer">
+          <button
+            type="button"
+            className="mobile-menu__footer-toggle"
+            onClick={() => setHelperOpen((value) => !value)}
+            aria-expanded={helperOpen}
+            aria-controls="mobile-menu-footer-panel"
+          >
+            <span>Need help finding a piece?</span>
+            <ChevronDown
+              size={18}
+              aria-hidden="true"
+              className={[
+                'mobile-menu__footer-chevron',
+                helperOpen ? 'mobile-menu__footer-chevron--open' : '',
+              ].join(' ').trim()}
+            />
+          </button>
+
+          <div
+            id="mobile-menu-footer-panel"
+            className={[
+              'mobile-menu__footer-panel',
+              helperOpen ? 'mobile-menu__footer-panel--open' : '',
+            ].join(' ').trim()}
+            aria-hidden={!helperOpen}
+            inert={!helperOpen ? true : undefined}
+          >
+            <div className="mobile-menu__footer-panel-inner">
+              <a
+                className="mobile-menu__footer-link"
+                href={buildWhatsAppUrl(whatsappMessages.generalEnquiry)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+              >
+                <WhatsAppIcon size={18} />
+                <span>Enquire on WhatsApp</span>
+              </a>
+              <a
+                className="mobile-menu__footer-link"
+                href={brand.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+              >
+                <Instagram size={18} aria-hidden="true" />
+                <span>Message us on Instagram</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

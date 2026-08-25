@@ -11,16 +11,6 @@ export function LaunchHero({ content }) {
             <span>{content.title}</span>
             <em>{content.accent}</em>
           </h2>
-          <p>{content.description}</p>
-          <Button
-            as="a"
-            href={content.href}
-            target={content.external ? '_blank' : undefined}
-            rel={content.external ? 'noopener noreferrer' : undefined}
-            className={content.external ? 'button--whatsapp' : ''}
-          >
-            {content.cta}
-          </Button>
         </RevealOnScroll>
 
         <RevealOnScroll className="launch-hero__visual" delay={120}>
@@ -36,6 +26,19 @@ export function LaunchHero({ content }) {
               </figure>
             ))}
           </div>
+        </RevealOnScroll>
+
+        <RevealOnScroll className="launch-hero__details" delay={60}>
+          <p>{content.description}</p>
+          <Button
+            as="a"
+            href={content.href}
+            target={content.external ? '_blank' : undefined}
+            rel={content.external ? 'noopener noreferrer' : undefined}
+            className={content.external ? 'button--whatsapp' : ''}
+          >
+            {content.cta}
+          </Button>
         </RevealOnScroll>
       </div>
     </section>
