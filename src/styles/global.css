@@ -109,7 +109,7 @@ button {
 
 .gift-banner.section {
   width: 100%;
-  padding-top: clamp(1.5rem, 3vw, 2.75rem);
+  padding-top: 40px;
 }
 
 .featured-carousel.section {
@@ -1243,6 +1243,7 @@ input:focus-visible {
 
 .collection-spotlight {
   width: min(1680px, calc(100vw - (clamp(0.75rem, 2.2vw, 1.5rem) * 2)));
+  padding-bottom: 0;
 }
 
 .collection-spotlight__header {
@@ -1457,8 +1458,12 @@ input:focus-visible {
 .gift-banner__media,
 .membership-form__card,
 .social-collage__panel {
-  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
+}
+
+.membership-form__card,
+.social-collage__panel {
+  border-radius: var(--radius-xl);
 }
 
 .gift-banner__media {
